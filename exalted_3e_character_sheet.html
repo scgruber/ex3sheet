@@ -3,6 +3,10 @@
   <head>
     <title>Exalted 3E Digital Character Sheet</title>
     <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+    <script type="text/jsx" src="./components.jsx"></script>
   </head>
   <body>
     <div class="flex-container">
@@ -287,31 +291,7 @@
             </div>
           </div>
         </div>
-        <div id="specialties">
-          <header><h2>Specialties</h2></header>
-          <div class="flex-container">
-            <div class="flex-1">
-              <div>____________________</div>
-              <div>____________________</div>
-              <div>____________________</div>
-            </div>
-            <div class="flex-1">
-              <div>____________________</div>
-              <div>____________________</div>
-              <div>____________________</div>
-            </div>
-            <div class="flex-1">
-              <div>____________________</div>
-              <div>____________________</div>
-              <div>____________________</div>
-            </div>
-            <div class="flex-1">
-              <div>____________________</div>
-              <div>____________________</div>
-              <div>____________________</div>
-            </div>
-          </div>
-        </div>
+        <div id="specialties"></div>
         <div id="merits">
           <header><h2>Merits</h2></header>
           <div class="flex-container">
@@ -415,5 +395,18 @@
     </div>
     <div id="possessions">
     </div>
+    <script type="application/json/nobabel" id="character-data">
+        {
+            "specialties": {
+                "Melee": ["Knives"],
+                "Stealth": ["Ambushes", "Urban Environments"],
+                "Awareness": ["Ambushes"]
+            }
+        }
+    </script>
+    <script type="text/jsx">
+        var character = JSON.parse(document.getElementById('character-data').innerHTML);
+        ReactDOM.render(<SpecialtiesPanel specialties={ character.specialties }/>, document.getElementById('specialties'));
+    </script>
   </body>
 </html>
