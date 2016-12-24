@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exalted 3E Digital Character Sheet</title>
+    <style type="text/css">
+      * { box-sizing: border-box; }
+      html { font-family: sans-serif; font-size: 14px; }
+      body { margin: 2rem auto; width: 90%; max-width: 1200px; }
+
+      h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
+      h1 { font-size: 2.369rem; }
+      h2 { font-size: 1.777rem; }
+      h3 { font-size: 1.333rem; }
+      h4 { font-size: 1rem; }
+      h5 { font-size: 0.750rem; }
+      h6 { font-size: 0.563rem; }
+      header { width: 100%; padding: 0.25rem; background-color: #222; text-align: center; letter-spacing: 0.05em; font-variant: small-caps; color: #fff; }
+
+      .flex-container { display: flex; width: 100%; }
+      .flex-1 { flex: 1; }
+      .flex-2 { flex: 2; }
+      .flex-3 { flex: 3; }
+      .flex-4 { flex: 4; }
+      .flex-5 { flex: 5; }
+      .centered { width: 100%; text-align: center; }
+
+      #character { flex: 1; margin-right: 1rem; }
+      #portrait { margin-top: 1rem; margin-bottom: 1rem; width: 100%; height: 10rem; border: 4px solid #888; }
+      #essence { margin-top: 1rem; margin-bottom: 1rem; font-size: 1.333rem; }
+      #permanent-essence { font-size: 2.369rem; }
+      #willpower { margin-bottom: 1rem; }
+      #permanent-willpower, #channeled-willpower { font-size: 1.777rem; }
+      #limit-break { margin-bottom: 1rem; }
+      #accumulated-limit { font-size: 1.777rem; }
+      #experience { margin-bottom: 1rem; font-size: 1.333rem; }
+      #health-levels { font-size: 1.333em; }
+
+      #stats { flex: 3; margin-left: 1rem; }
+      #attributes { margin-bottom: 1rem; font-size: 1.777rem; }
+      #physical-attributes { margin-right: 0.5rem; }
+      #social-attributes { margin-left: 0.5rem; margin-right: 0.5rem; }
+      #mental-attributes { margin-left: 0.5rem; }
+      #abilities { margin-bottom: 1rem; font-size: 1.333rem; }
+      #abilities>.flex-container>.flex-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
+      #abilities>.flex-container>.flex-1:first-child { margin-left: 0; }
+      #abilities>.flex-container>.flex-1:last-child { margin-right: 0; }
+      #specialties { margin-bottom: 1rem; font-size: 1.333rem; }
+      #specialties>.flex-container>.flex-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
+      #specialties>.flex-container>.flex-1:first-child { margin-left: 0; }
+      #specialties>.flex-container>.flex-1:last-child { margin-right: 0; }
+      #specialties { margin-bottom: 1rem; font-size: 1.333rem; }
+      #merits { margin-bottom: 1rem; font-size: 1.333rem; }
+      #merits>.flex-container>.flex-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
+      #merits>.flex-container>.flex-1:first-child { margin-left: 0; }
+      #merits>.flex-container>.flex-1:last-child { margin-right: 0; }
+      #attacks { margin-bottom: 1rem; font-size: 1.333rem; }
+      #attacks-table-header { font-variant: small-caps; }
+      #attacks>.flex-container>.flex-1 { margin-left: 0.25rem; margin-right: 0.25rem; }
+      #attacks>.flex-container>.flex-1:first-child { margin-left: 0; }
+      #attacks>.flex-container>.flex-1:last-child { margin-right: 0; }
+    </style>
+  </head>
+  <body>
+    <div class="flex-container">
+      <div id="character">
+        <h1 class="centered">Character Name</h1>
+        <div class="flex-container">
+          <div class="flex-1">Player</div>
+          <div class="flex-2">____________________</div>
+        </div>
+        <div id="portrait"></div>
+        <div class="flex-container">
+          <div class="flex-1">Type</div>
+          <div class="flex-2">____________________</div>
+        </div>
+        <div class="flex-container">
+          <div class="flex-1">Caste</div>
+          <div class="flex-2">____________________</div>
+        </div>
+        <div class="flex-container">
+          <div class="flex-1">Concept</div>
+          <div class="flex-2">____________________</div>
+        </div>
+        <div class="flex-container">
+          <div class="flex-1">Totem</div>
+          <div class="flex-2">____________________</div>
+        </div>
+        <div class="flex-container">
+          <div class="flex-1">Supernal</div>
+          <div class="flex-2">____________________</div>
+        </div>
+        <div id="essence">
+          <header><h2>Essence</h2></header>
+          <div id="permanent-essence" class="centered">O O O O O</div>
+          <div class="flex-container">
+            <div class="flex-1">
+              <h4 class="centered">Personal</h4>
+              <div class="centered">___ / ___</div>
+            </div>
+            <div class="flex-1">
+              <h4 class="centered">Peripheral</h4>
+              <div class="centered">___ / ___</div>
+            </div>
+            <div class="flex-1">
+              <h4 class="centered">Committed</h4>
+              <div class="centered">___</div>
+            </div>
+          </div>
+        </div>
+        <div id="willpower">
+          <header><h2>Willpower</h2></header>
+          <div id="permanent-willpower" class="centered">O O O O O O O O O O</div>
+          <div id="channeled-willpower" class="centered">[ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]</div>
+        </div>
+        <div id="limit-break">
+          <header><h2>Limit Break</h2></header>
+          <div id="accumulated-limit" class="centered">[ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]</div>
+          <div id="limit-condition" class="centered">Trigger: ______________________________<br/>_____________________________________<br/>_____________________________________</div>
+        </div>
+        <div id="experience">
+          <header><h2>Experience</h2></header>
+          <div class="flex-container">
+            <div class="flex-1">
+              <h3 class="centered">General</h4>
+              <div class="centered">___ / ___</div>
+            </div>
+            <div class="flex-1">
+              <h3 class="centered">Solar</h4>
+              <div class="centered">___ / ___</div>
+            </div>
+          </div>
+        </div>
+        <div id="health-levels">
+          <header><h2>Health Levels</h2></header>
+          <div class="flex-container">
+            <div class="flex-1"><h3>-0</h3></div>
+            <div class="flex-5">[ ]</div>
+          </div>
+          <div class="flex-container">
+            <div class="flex-1"><h3>-1</h3></div>
+            <div class="flex-5">[ ] [ ]</div>
+          </div>
+          <div class="flex-container">
+            <div class="flex-1"><h3>-2</h3></div>
+            <div class="flex-5">[ ] [ ]</div>
+          </div>
+          <div class="flex-container">
+            <div class="flex-1"><h3>-4</h3></div>
+            <div class="flex-5">[ ]</div>
+          </div>
+          <div class="flex-container">
+            <div class="flex-1"><h3>I</h3></div>
+            <div class="flex-5">[ ]</div>
+          </div>
+        </div>
+      </div>
+      <div id="stats">
+        <div id="attributes">
+          <header><h2>Attributes</h2></header>
+          <div class="flex-container">
+            <div id="physical-attributes" class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">Strength</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Dexterity</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Stamina</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+            <div id="social-attributes" class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">Charisma</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Manipulation</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Appearance</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+            <div id="mental-attributes" class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">Perception</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Intelligence</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Wits</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="abilities">
+          <header><h2>Abilities</h2></header>
+          <div class="flex-container">
+            <div class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">Archery</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Athletics</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Awareness</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Brawl</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Bureaucracy</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Dodge</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Integrity</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Investigation</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">Larceny</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Linguistics</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Lore</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Medicine</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Melee</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Occult</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Performance</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Presence</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">Resistance</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Ride</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Sail</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Socialize</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Stealth</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Survival</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Thrown</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">War</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">Craft ______</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Craft ______</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Craft ______</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">Craft ______</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">______ Style</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">______ Style</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">______ Style</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">______ Style</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="specialties">
+          <header><h2>Specialties</h2></header>
+          <div class="flex-container">
+            <div class="flex-1">
+              <div>____________________</div>
+              <div>____________________</div>
+              <div>____________________</div>
+            </div>
+            <div class="flex-1">
+              <div>____________________</div>
+              <div>____________________</div>
+              <div>____________________</div>
+            </div>
+            <div class="flex-1">
+              <div>____________________</div>
+              <div>____________________</div>
+              <div>____________________</div>
+            </div>
+            <div class="flex-1">
+              <div>____________________</div>
+              <div>____________________</div>
+              <div>____________________</div>
+            </div>
+          </div>
+        </div>
+        <div id="merits">
+          <header><h2>Merits</h2></header>
+          <div class="flex-container">
+            <div class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-1">_________________</div>
+                <div class="attr-dots">OOOOO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="attacks">
+          <header><h2>Attacks</h2></header>
+          <div id="attacks-table-header" class="flex-container">
+            <div class="flex-5">Name</div>
+            <div class="flex-1">Acc</div>
+            <div class="flex-1">Dmg</div>
+            <div class="flex-1">Def</div>
+            <div class="flex-1">Ovw</div>
+            <div class="flex-3">Tags</div>
+            <div class="flex-1">Pool</div>
+          </div>
+          <div class="flex-container">
+            <div class="flex-5">_________________________</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-3">_______________</div>
+            <div class="flex-1">___</div>
+          </div>
+          <div class="flex-container">
+            <div class="flex-5">_________________________</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-3">_______________</div>
+            <div class="flex-1">___</div>
+          </div>
+          <div class="flex-container">
+            <div class="flex-5">_________________________</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-3">_______________</div>
+            <div class="flex-1">___</div>
+          </div>
+          <div class="flex-container">
+            <div class="flex-5">_________________________</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-1">___</div>
+            <div class="flex-3">_______________</div>
+            <div class="flex-1">___</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="intimacies">
+    </div>
+    <div id="charms">
+    </div>
+    <div id="possessions">
+    </div>
+  </body>
+</html>
