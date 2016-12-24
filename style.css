@@ -40,10 +40,7 @@ header { width: 100%; padding: 0.25rem; background-color: #222; text-align: cent
 #health-levels { font-size: 1.333em; }
 
 #stats { flex: 3; margin-left: 1rem; }
-#attributes { margin-bottom: 1rem; font-size: 1.777rem; }
-#physical-attributes { margin-right: 0.5rem; }
-#social-attributes { margin-left: 0.5rem; margin-right: 0.5rem; }
-#mental-attributes { margin-left: 0.5rem; }
+#attributes { font-size: 1.777rem; }
 #abilities { margin-bottom: 1rem; font-size: 1.333rem; }
 #abilities>.flex-container>.flex-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
 #abilities>.flex-container>.flex-1:first-child { margin-left: 0; }

@@ -103,53 +103,7 @@
         </div>
       </div>
       <div id="stats">
-        <div id="attributes">
-          <header><h2>Attributes</h2></header>
-          <div class="flex-container">
-            <div id="physical-attributes" class="flex-1">
-              <div class="flex-container">
-                <div class="flex-1">Strength</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">Dexterity</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">Stamina</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-            </div>
-            <div id="social-attributes" class="flex-1">
-              <div class="flex-container">
-                <div class="flex-1">Charisma</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">Manipulation</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">Appearance</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-            </div>
-            <div id="mental-attributes" class="flex-1">
-              <div class="flex-container">
-                <div class="flex-1">Perception</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">Intelligence</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">Wits</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="attributes"></div>
         <div id="abilities">
           <header><h2>Abilities</h2></header>
           <div class="flex-container">
@@ -351,6 +305,17 @@
     </div>
     <script type="application/json/nobabel" id="character-data">
         {
+            "attributes": {
+                "Strength": 3,
+                "Dexterity": 4,
+                "Stamina": 4,
+                "Charisma": 3,
+                "Manipulation": 2,
+                "Appearance": 2,
+                "Perception": 3,
+                "Intelligence": 2,
+                "Wits": 4
+            },
             "specialties": {
                 "Melee": ["Knives"],
                 "Stealth": ["Ambushes", "Urban Environments"],
@@ -368,6 +333,7 @@
         var character = JSON.parse(document.getElementById('character-data').innerHTML);
         ReactDOM.render(<SpecialtiesPanel specialties={ character.specialties }/>, document.getElementById('specialties'));
         ReactDOM.render(<MeritsPanel merits={ character.merits }/>, document.getElementById('merits'));
+        ReactDOM.render(<AttributesPanel attributes={ character.attributes }/>, document.getElementById('attributes'));
     </script>
   </body>
 </html>
