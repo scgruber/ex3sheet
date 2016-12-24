@@ -292,53 +292,7 @@
           </div>
         </div>
         <div id="specialties"></div>
-        <div id="merits">
-          <header><h2>Merits</h2></header>
-          <div class="flex-container">
-            <div class="flex-1">
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-            </div>
-            <div class="flex-1">
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-            </div>
-            <div class="flex-1">
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-              <div class="flex-container">
-                <div class="flex-1">_________________</div>
-                <div class="attr-dots">OOOOO</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="merits"></div>
         <div id="attacks">
           <header><h2>Attacks</h2></header>
           <div id="attacks-table-header" class="flex-container">
@@ -401,12 +355,19 @@
                 "Melee": ["Knives"],
                 "Stealth": ["Ambushes", "Urban Environments"],
                 "Awareness": ["Ambushes"]
+            },
+            "merits": {
+                "Danger Sense": 3,
+                "Fast Reflexes": 3,
+                "Ambidextrous": 1,
+                "Mentor: Quiet Ash": 3
             }
         }
     </script>
     <script type="text/jsx">
         var character = JSON.parse(document.getElementById('character-data').innerHTML);
         ReactDOM.render(<SpecialtiesPanel specialties={ character.specialties }/>, document.getElementById('specialties'));
+        ReactDOM.render(<MeritsPanel merits={ character.merits }/>, document.getElementById('merits'));
     </script>
   </body>
 </html>

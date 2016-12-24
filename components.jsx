@@ -13,6 +13,43 @@
     }
 });
 
+var Dots = React.createClass({
+    propTypes: {
+        fill: React.PropTypes.number.isRequired,
+        max: React.PropTypes.number.isRequired,
+    },
+
+    render: function(){
+        var openDot = "\u26AA";
+        var fillDot = "\u26AB";
+        var output = "";
+        for (var i=0; i<this.props.max; i++) {
+            if (i < this.props.fill) {
+                output += fillDot;
+            } else {
+                output += openDot;
+            }
+        }
+        return (<span>{ output }</span>);
+    }
+});
+
+var DottedStat = React.createClass({
+    propTypes: {
+        stat: React.PropTypes.string,
+        rating: React.PropTypes.number
+    },
+
+    render: function() {
+        return (<div className="flex-container">
+            { this.props.stat ?
+                (<div className="stat ellipsis-overflow flex-1">{ this.props.stat }</div>)
+              : (<div className="stat blank-line flex-1"></div>) }
+            <div className="rating"><Dots fill={ this.props.rating } max={ 5 } /></div>
+        </div>);
+    }
+})
+
 var SpecialtiesPanel = React.createClass({
     propTypes: {
         specialties: React.PropTypes.objectOf(React.PropTypes.arrayOf(React.PropTypes.string)).isRequired
@@ -36,7 +73,7 @@ var SpecialtiesPanel = React.createClass({
         return (<div key={ idx } className="flex-1">
             { column.map(function(specialty) {
                 if (specialty === null) {
-                    return (<div key="null" className="blank-line"></div>);
+                    return (<div key="null" className="blank-line">&nbsp;</div>);
                 } else {
                     return (<div key={ specialty } className="ellipsis-overflow">{ specialty }</div>);
                 }
@@ -59,4 +96,46 @@ var SpecialtiesPanel = React.createClass({
           </div>
         </BigPanel>);
     }
+});
+
+var MeritsPanel = React.createClass({
+    propTypes: {
+        merits: React.PropTypes.objectOf(React.PropTypes.number).isRequired
+    },
+
+    sortIntoColumns: function(merits) {
+        var height = Math.ceil(merits.length / 3) + 1;
+        var columns = [ [], [], [] ];
+        for (var i=0; i < merits.length; i++) {
+            columns[i%3].push(merits[i]);
+        }
+        for (var j=0; j < 3; j++) {
+            while (columns[j].length < height) {
+                columns[j].push(null);
+            }
+        }
+        return columns;
+    },
+
+    renderColumn: function(column, idx) {
+        return (<div key={ idx } className="flex-1">
+            { column.map(function(merit, jdx) {
+                if (!merit) merit = [null, 0];
+                return (<DottedStat key={ merit[0] + jdx } stat={ merit[0] } rating={ merit[1] } />);
+            }) }
+        </div>);
+},
+
+render: function () {
+    var self = this;
+    var flatMerits = Object.keys(this.props.merits).sort().map(function(m) {
+        return [m, self.props.merits[m]]
+    });
+    var columns = this.sortIntoColumns(flatMerits)
+    return (<BigPanel title="Merits">
+      <div className="flex-container">
+        { columns.map(function(column, idx) { return self.renderColumn(column, idx) }) }
+      </div>
+    </BigPanel>);
+}
 });
