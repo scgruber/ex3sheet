@@ -1,11 +1,12 @@
 ﻿var BigPanel = React.createClass({
     propTypes: {
-        title: React.PropTypes.string.isRequired
+        title: React.PropTypes.string.isRequired,
+        id: React.PropTypes.string
     },
 
     render: function() {
-        return (<section className="big-panel">
-            <header><h2>{ this.props.title }</h2></header>
+        return (<section className="big-panel" id={ this.props.id }>
+            <header><h3>{ this.props.title }</h3></header>
             <div className="big-panel-content">
                 { this.props.children }
             </div>
@@ -106,7 +107,7 @@ var AttributesPanel = React.createClass({
             ['Charisma', 'Manipulation', 'Appearance'],
             ['Perception', 'Intelligence', 'Wits']
         ];
-        return (<BigPanel title="Attributes">
+        return (<BigPanel title="Attributes" id="attributes">
             <div className="flex-container">
                 { columns.map(function(col) {
                     return (<div key={ col.join() } className="flex-1">
@@ -148,7 +149,7 @@ var AbilitiesPanel = React.createClass({
         }).reduce(function(acc, e) { return Object.assign(acc, e); }, {});
         var extraAbilities = Object.keys(extraAbilityProps).sort();
         while (extraAbilities.length < normalAbilitySets[0].length) extraAbilities.push(null);
-        return (<BigPanel title="Abilities">
+        return (<BigPanel title="Abilities" id="abilities">
             <div className="flex-container">
                 { normalAbilitySets.map(function(abilitySet, idx) {
                     return (<div key={ "abilities-"+(idx+1) } className="flex-1">
@@ -211,7 +212,7 @@ var SpecialtiesPanel = React.createClass({
             }));
         });
         var columns = this.sortIntoColumns(flatSpecialties)
-        return (<BigPanel title="Specialties">
+        return (<BigPanel title="Specialties" id="specialties">
           <div className="flex-container">
             { columns.map(function(column, idx) { return self.renderColumn(column, idx) }) }
           </div>
@@ -253,7 +254,7 @@ render: function () {
         return [m, self.props.merits[m]]
     });
     var columns = this.sortIntoColumns(flatMerits)
-    return (<BigPanel title="Merits">
+    return (<BigPanel title="Merits" id="merits">
       <div className="flex-container">
         { columns.map(function(column, idx) { return self.renderColumn(column, idx) }) }
       </div>
@@ -302,10 +303,32 @@ var AttacksPanel = React.createClass({
             }
         })
         var unarmed = [ 'Unarmed', 4, 7, 0, 1, ['Bashing', 'Brawl', 'Grappling', 'Natural'], 'Brawl']
-        return (<BigPanel title="Attacks">
+        return (<BigPanel title="Attacks" id="attacks">
             <BigTable columns={ [ {title: 'Name', width: 10}, {title: 'Acc', width: 3}, {title: 'Dmg', width: 2},
                                 {title: 'Def', width: 2}, {title: 'Ovw', width: 2}, {title: 'Tags', width: 8}, { title: 'Abil', width: 3} ] }
                       values={ Object.keys(attacks).sort().map(function(a) { return self.convertToRow(a, attacks[a]); }) } />
         </BigPanel>);
     }
 });
+
+var Stats = React.createClass({
+    propTypes: {
+        character: React.PropTypes.shape({
+            attributes: React.PropTypes.any.isRequired,
+            abilities: React.PropTypes.any.isRequired,
+            specialties: React.PropTypes.any.isRequired,
+            merits: React.PropTypes.any.isRequired,
+            attacks: React.PropTypes.any.isRequired
+        })
+    },
+
+    render: function() {
+        return (<div>
+            <AttributesPanel attributes={ this.props.character.attributes }/>
+            <AbilitiesPanel abilities={ this.props.character.abilities }/>
+            <SpecialtiesPanel specialties={ this.props.character.specialties }/>
+            <MeritsPanel merits={ this.props.character.merits }/>
+            <AttacksPanel attacks={ this.props.character.attacks }/>
+        </div>);
+    }
+})

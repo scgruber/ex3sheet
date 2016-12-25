@@ -102,13 +102,7 @@
           </div>
         </div>
       </div>
-      <div id="stats">
-        <div id="attributes"></div>
-        <div id="abilities"></div>
-        <div id="specialties"></div>
-        <div id="merits"></div>
-        <div id="attacks"></div>
-      </div>
+      <div id="stats"></div>
     </div>
     <div id="intimacies">
     </div>
@@ -192,11 +186,7 @@
     </script>
     <script type="text/jsx">
         var character = JSON.parse(document.getElementById('character-data').innerHTML);
-        ReactDOM.render(<SpecialtiesPanel specialties={ character.specialties }/>, document.getElementById('specialties'));
-        ReactDOM.render(<MeritsPanel merits={ character.merits }/>, document.getElementById('merits'));
-        ReactDOM.render(<AttributesPanel attributes={ character.attributes }/>, document.getElementById('attributes'));
-        ReactDOM.render(<AbilitiesPanel abilities={ character.abilities }/>, document.getElementById('abilities'));
-        ReactDOM.render(<AttacksPanel attacks={ character.attacks }/>, document.getElementById('attacks'));
+        ReactDOM.render(<Stats character={ character }/>, document.getElementById('stats'));
     </script>
   </body>
 </html>
