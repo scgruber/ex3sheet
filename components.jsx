@@ -38,13 +38,14 @@ var Dots = React.createClass({
 var DottedStat = React.createClass({
     propTypes: {
         stat: React.PropTypes.string,
-        rating: React.PropTypes.number
+        rating: React.PropTypes.number,
+        statClassName: React.PropTypes.string
     },
 
     render: function() {
         return (<div className="flex-container">
             { this.props.stat ?
-                (<div className="stat ellipsis-overflow flex-1">{ this.props.stat }</div>)
+                (<div className={ ["stat", "ellipsis-overflow", "flex-1", this.props.statClassName].join(' ') }>{ this.props.stat }</div>)
               : (<div className="stat blank-line flex-1">&nbsp;</div>) }
             <div className="rating"><Dots fill={ this.props.rating } max={ 5 } /></div>
         </div>);
@@ -154,7 +155,8 @@ var AbilitiesPanel = React.createClass({
                 { normalAbilitySets.map(function(abilitySet, idx) {
                     return (<div key={ "abilities-"+(idx+1) } className="flex-1">
                         { abilitySet.map(function(ability) {
-                            return <DottedStat key={ ability } stat={ ability } rating={ self.props.abilities[ability].rating }/>;
+                            var abilityClass = self.props.abilities[ability].favored ? "ability-favored" : null;
+                            return <DottedStat key={ ability } stat={ ability } statClassName={ abilityClass } rating={ self.props.abilities[ability].rating }/>;
                         }) }
                     </div>);
                 }) }

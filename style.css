@@ -48,6 +48,7 @@ h6 { font-size: 1.000rem; }
 #stats { flex: 3; margin-left: 1rem; }
 #attributes { font-size: 1.728rem; }
 #abilities { font-size: 1.200rem; }
+.ability-favored { font-weight: bold; }
 #specialties { font-size: 1.200rem; }
 #merits { font-size: 1.200rem; }
 #attacks { font-size: 1.200rem; }
