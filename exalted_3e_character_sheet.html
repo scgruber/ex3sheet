@@ -107,54 +107,7 @@
         <div id="abilities"></div>
         <div id="specialties"></div>
         <div id="merits"></div>
-        <div id="attacks">
-          <header><h2>Attacks</h2></header>
-          <div id="attacks-table-header" class="flex-container">
-            <div class="flex-5">Name</div>
-            <div class="flex-1">Acc</div>
-            <div class="flex-1">Dmg</div>
-            <div class="flex-1">Def</div>
-            <div class="flex-1">Ovw</div>
-            <div class="flex-3">Tags</div>
-            <div class="flex-1">Pool</div>
-          </div>
-          <div class="flex-container">
-            <div class="flex-5">_________________________</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-3">_______________</div>
-            <div class="flex-1">___</div>
-          </div>
-          <div class="flex-container">
-            <div class="flex-5">_________________________</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-3">_______________</div>
-            <div class="flex-1">___</div>
-          </div>
-          <div class="flex-container">
-            <div class="flex-5">_________________________</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-3">_______________</div>
-            <div class="flex-1">___</div>
-          </div>
-          <div class="flex-container">
-            <div class="flex-5">_________________________</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-1">___</div>
-            <div class="flex-3">_______________</div>
-            <div class="flex-1">___</div>
-          </div>
-        </div>
+        <div id="attacks"></div>
       </div>
     </div>
     <div id="intimacies">
@@ -214,6 +167,26 @@
                 "Fast Reflexes": 3,
                 "Ambidextrous": 1,
                 "Mentor: Quiet Ash": 3
+            },
+            "attacks":{
+                "Knife": {
+                    "accuracy": 4,
+                    "witheringDamage": 7,
+                    "decisiveDamage": "L",
+                    "defense": 0,
+                    "overwhelming": 1,
+                    "tags": [],
+                    "ability": "Melee"
+                },
+                "Knife (Thrown)": {
+                    "accuracy": [4,3],
+                    "witheringDamage": 7,
+                    "decisiveDamage": "L",
+                    "defense": null,
+                    "overwhelming": 1,
+                    "tags": [],
+                    "ability": "Thrown"
+                }
             }
         }
     </script>
@@ -223,6 +196,7 @@
         ReactDOM.render(<MeritsPanel merits={ character.merits }/>, document.getElementById('merits'));
         ReactDOM.render(<AttributesPanel attributes={ character.attributes }/>, document.getElementById('attributes'));
         ReactDOM.render(<AbilitiesPanel abilities={ character.abilities }/>, document.getElementById('abilities'));
+        ReactDOM.render(<AttacksPanel attacks={ character.attacks }/>, document.getElementById('attacks'));
     </script>
   </body>
 </html>
