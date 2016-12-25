@@ -108,6 +108,49 @@ var LittleTable = React.createClass({
     }
 });
 
+var EssencePanel = React.createClass({
+    propTypes: {
+        essence: React.PropTypes.shape({
+            personal: React.PropTypes.shape({
+                free: React.PropTypes.number,
+                committed: React.PropTypes.number
+            }),
+            peripheral: React.PropTypes.shape({
+                free: React.PropTypes.number,
+                committed: React.PropTypes.number
+            })
+        }),
+        experience: React.PropTypes.shape({
+            general: React.PropTypes.shape({
+                total: React.PropTypes.number
+            })
+        })
+    },
+
+    poolBreakdown: function(pool, props) {
+        return props.free + ' / ' + (pool - props.committed) + ' [' + props.committed + ']';
+    },
+
+    render: function () {
+        var self = this;
+        var essenceThresholds = [0, 50, 125, 200, 300];
+        var essence = essenceThresholds.findIndex(function(t) { return self.props.experience.general.total < t; });
+        if (essence == -1) essence = 5;
+
+        var personalPool = essence*3 + 10;
+        var peripheralPool = essence*7 + 26;
+
+        return (<BigPanel title="Essence" id="essence">
+            <div id="essence-rating">
+                <Dots fill={ essence } max={ 5 }/>
+            </div>
+            <LittleTable columns={ ['Personal', 'Peripheral'] }
+                         values={ [ this.poolBreakdown(personalPool, this.props.essence.personal),
+                                    this.poolBreakdown(peripheralPool, this.props.essence.peripheral) ]} />
+        </BigPanel>);
+    }
+});
+
 var ExperiencePanel = React.createClass({
     propTypes: {
         experience: React.PropTypes.shape({

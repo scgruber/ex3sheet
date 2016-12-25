@@ -37,24 +37,7 @@
           <div class="flex-1">Supernal</div>
           <div class="flex-2">____________________</div>
         </div>
-        <div id="essence">
-          <header><h2>Essence</h2></header>
-          <div id="permanent-essence" class="centered">O O O O O</div>
-          <div class="flex-container">
-            <div class="flex-1">
-              <h4 class="centered">Personal</h4>
-              <div class="centered">___ / ___</div>
-            </div>
-            <div class="flex-1">
-              <h4 class="centered">Peripheral</h4>
-              <div class="centered">___ / ___</div>
-            </div>
-            <div class="flex-1">
-              <h4 class="centered">Committed</h4>
-              <div class="centered">___</div>
-            </div>
-          </div>
-        </div>
+        <div id="essence"></div>
         <div id="willpower">
           <header><h2>Willpower</h2></header>
           <div id="permanent-willpower" class="centered">O O O O O O O O O O</div>
@@ -100,6 +83,16 @@
     </div>
     <script type="application/json/nobabel" id="character-data">
         {
+            "essence": {
+                "personal": {
+                    "free": 13,
+                    "committed": 0
+                },
+                "peripheral": {
+                    "free": 33,
+                    "committed": 0
+                }
+            },
             "experience": {
                 "general": {
                     "free": 0,
@@ -186,6 +179,7 @@
         var character = JSON.parse(document.getElementById('character-data').innerHTML);
         ReactDOM.render(<Stats character={ character }/>, document.getElementById('stats'));
         ReactDOM.render(<ExperiencePanel experience={ character.experience }/>, document.getElementById('experience'));
+        ReactDOM.render(<EssencePanel essence={ character.essence } experience={ character.experience }/>, document.getElementById('essence'));
     </script>
   </body>
 </html>
