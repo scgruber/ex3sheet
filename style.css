@@ -41,10 +41,7 @@ header { width: 100%; padding: 0.25rem; background-color: #222; text-align: cent
 
 #stats { flex: 3; margin-left: 1rem; }
 #attributes { font-size: 1.777rem; }
-#abilities { margin-bottom: 1rem; font-size: 1.333rem; }
-#abilities>.flex-container>.flex-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
-#abilities>.flex-container>.flex-1:first-child { margin-left: 0; }
-#abilities>.flex-container>.flex-1:last-child { margin-right: 0; }
+#abilities { font-size: 1.333rem; }
 #specialties { font-size: 1.333rem; }
 #merits { font-size: 1.333rem; }
 #attacks { margin-bottom: 1rem; font-size: 1.333rem; }
