@@ -14,25 +14,37 @@
     }
 });
 
-var Dots = React.createClass({
+var Marks = React.createClass({
     propTypes: {
+        openMark: React.PropTypes.number.isRequired,
+        fillMark: React.PropTypes.number.isRequired,
         fill: React.PropTypes.number.isRequired,
         max: React.PropTypes.number.isRequired,
     },
 
     render: function(){
-        var openDot = "\u26AA";
-        var fillDot = "\u26AB";
         var output = "";
         for (var i=0; i<this.props.max; i++) {
             if (i < this.props.fill) {
-                output += fillDot;
+                output += String.fromCharCode(this.props.fillMark);
             } else {
-                output += openDot;
+                output += String.fromCharCode(this.props.openMark);
             }
         }
-        return (<span className="dots">{ output }</span>);
+        return (<span className="marks">{ output }</span>);
     }
+});
+
+var Dots = React.createClass({
+    render: function () {
+        return (<Marks openMark={ 0x25CB } fillMark={ 0x25CF } fill={ this.props.fill } max={ this.props.max }/>);
+}
+});
+
+var Boxes = React.createClass({
+    render: function () {
+        return (<Marks openMark={ 0x25FB } fillMark={ 0x25FC } fill={ this.props.fill } max={ this.props.max }/>);
+}
 });
 
 var DottedStat = React.createClass({
@@ -147,6 +159,26 @@ var EssencePanel = React.createClass({
             <LittleTable columns={ ['Personal', 'Peripheral'] }
                          values={ [ this.poolBreakdown(personalPool, this.props.essence.personal),
                                     this.poolBreakdown(peripheralPool, this.props.essence.peripheral) ]} />
+        </BigPanel>);
+    }
+});
+
+var WillpowerPanel = React.createClass({
+    propTypes: {
+        willpower: React.PropTypes.shape({
+            channeled: React.PropTypes.number,
+            rating: React.PropTypes.number
+        })
+    },
+
+    render: function () {
+        return (<BigPanel title="Willpower" id="willpower">
+            <div id="willpower-rating">
+                <Dots fill={ this.props.willpower.rating } max={ 10 } />
+            </div>
+            <div id="willpower-channels">
+                <Boxes fill={ this.props.willpower.channeled } max={ 10 } />
+            </div>
         </BigPanel>);
     }
 });
