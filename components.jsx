@@ -16,34 +16,85 @@
 
 var Marks = React.createClass({
     propTypes: {
-        openMark: React.PropTypes.number.isRequired,
-        fillMark: React.PropTypes.number.isRequired,
+        openMark: React.PropTypes.node.isRequired,
+        fillMark: React.PropTypes.node.isRequired,
+        disableMark: React.PropTypes.node,
         fill: React.PropTypes.number.isRequired,
         max: React.PropTypes.number.isRequired,
+        enabled: React.PropTypes.number,
     },
 
     render: function(){
-        var output = "";
-        for (var i=0; i<this.props.max; i++) {
+        var output = [];
+        var enabled = this.props.enabled || this.props.max;
+        for (var i=0; i<enabled; i++) {
             if (i < this.props.fill) {
-                output += String.fromCharCode(this.props.fillMark);
+                output.push(this.props.fillMark);
             } else {
-                output += String.fromCharCode(this.props.openMark);
+                output.push(this.props.openMark);
             }
+        }
+        while (output.length < this.props.max) {
+            output.push(this.props.disableMark);
         }
         return (<span className="marks">{ output }</span>);
     }
 });
 
+var Dot = React.createClass({
+    propTypes: {
+        filled: React.PropTypes.bool
+    },
+
+    render: function () {
+        var classes = ['dot', (this.props.filled ? 'filled' : 'open')].join(' ');
+        return (<svg width="0.6em" height="1em" viewBox="0.2 0 0.6 1">
+            <circle className={ classes } cx="0.5" cy="0.5" r="0.225"></circle>
+        </svg>);
+    }
+});
+
 var Dots = React.createClass({
     render: function () {
-        return (<Marks openMark={ 0x25CB } fillMark={ 0x25CF } fill={ this.props.fill } max={ this.props.max }/>);
-}
+        return (<Marks openMark={ <Dot filled={ false }/> } fillMark={ <Dot filled={ true }/> } fill={ this.props.fill } max={ this.props.max }/>);
+    }
 });
+
+var Box = React.createClass({
+    propTypes: {
+        mode: React.PropTypes.oneOf(['open', 'fill', 'slash', 'cross', 'star', 'light'])
+    },
+
+    render: function () {
+        var classes = ['box', this.props.mode].join(' ');
+        var marks = []
+        if (this.props.mode === 'slash') {
+            marks = [
+                <line className="box-stroke" x1="0.25" y1="0.25" x2="0.75" y2="0.75"></line>
+            ];
+        } else if (this.props.mode === 'cross') {
+            marks = [
+                <line className="box-stroke" x1="0.25" y1="0.25" x2="0.75" y2="0.75"></line>,
+                <line className="box-stroke" x1="0.25" y1="0.75" x2="0.75" y2="0.25"></line>
+            ];
+        } else if (this.props.mode === 'star') {
+            marks = [
+                <line className="box-stroke" x1="0.25" y1="0.25" x2="0.75" y2="0.75"></line>,
+                <line className="box-stroke" x1="0.25" y1="0.75" x2="0.75" y2="0.25"></line>,
+                <line className="box-stroke" x1="0.5" y1="0.225" x2="0.5" y2="0.775"></line>,
+                <line className="box-stroke" x1="0.225" y1="0.5" x2="0.775" y2="0.5"></line>
+            ];
+        }
+        return (<svg width="0.6em" height="1em" viewBox="0.2 0 0.6 1">
+            <rect className={ classes } x="0.275" y="0.275" width="0.45" height="0.45"></rect>
+            { marks }
+        </svg>);
+    }
+})
 
 var Boxes = React.createClass({
     render: function () {
-        return (<Marks openMark={ 0x25FB } fillMark={ 0x25FC } fill={ this.props.fill } max={ this.props.max }/>);
+        return (<Marks openMark={ <Box mode="open"/> } fillMark={ <Box mode="cross"/> } disableMark={ <Box mode="light"/> } fill={ this.props.fill } max={ this.props.max } enabled={ this.props.enabled }/>);
 }
 });
 
@@ -120,6 +171,44 @@ var LittleTable = React.createClass({
     }
 });
 
+var HealthLevel = React.createClass({
+    propTypes: {
+        penalty: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.oneOf(['I'])]).isRequired,
+        levels: React.PropTypes.number.isRequired,
+        bashing: React.PropTypes.number.isRequired,
+        lethal: React.PropTypes.number.isRequired,
+        aggravated: React.PropTypes.number.isRequired
+    },
+
+    openLevel: <Box mode="open"/>,
+    bashingLevel: <Box mode="slash"/>,
+    lethalLevel: <Box mode="cross"/>,
+    aggravatedLevel: <Box mode="star"/>,
+    inactiveLevel: <Box mode="light" />,
+
+    render: function () {
+        var levels = [];
+        for (var i=0; i<this.props.levels; i++) {
+            if (i < this.props.aggravated) {
+                levels.push(this.aggravatedLevel);
+            } else if (i < (this.props.aggravated + this.props.lethal)) {
+                levels.push(this.lethalLevel);
+            } else if (i < (this.props.aggravated + this.props.lethal + this.props.bashing)) {
+                levels.push(this.bashingLevel);
+            } else {
+                levels.push(this.openLevel);
+            }
+        }
+        while (levels.length < 5) {
+            levels.push(this.inactiveLevel);
+        }
+        return (<div className="health-level flex-container">
+            <div className="health-level-penalty flex-1">{ this.props.penalty }</div>
+            <div className="health-level-levels">{ levels }</div>
+        </div>)
+    }
+})
+
 var EssencePanel = React.createClass({
     propTypes: {
         essence: React.PropTypes.shape({
@@ -177,7 +266,7 @@ var WillpowerPanel = React.createClass({
                 <Dots fill={ this.props.willpower.rating } max={ 10 } />
             </div>
             <div id="willpower-channels">
-                <Boxes fill={ this.props.willpower.channeled } max={ 10 } />
+                <Boxes fill={ this.props.willpower.channeled } max={ 10 } enabled={ this.props.willpower.rating } />
             </div>
         </BigPanel>);
     }
@@ -203,8 +292,42 @@ var ExperiencePanel = React.createClass({
                          values={ [ [this.props.experience.general.free, this.props.experience.general.total].join(' / '),
                                     [this.props.experience.solar.free, this.props.experience.solar.total].join(' / ') ] } />
         </BigPanel>)
+}
+});
+
+var HealthLevelsPanel = React.createClass({
+    propTypes: {
+        health: React.PropTypes.shape({
+            bashing: React.PropTypes.number,
+            lethal: React.PropTypes.number,
+            aggravated: React.PropTypes.number
+        })
+    },
+
+    baseLevels: [
+        { penalty: -0, levels: 1 },
+        { penalty: -1, levels: 2 },
+        { penalty: -2, levels: 2 },
+        { penalty: -4, levels: 1 },
+        { penalty: 'I', levels: 1 }
+    ],
+
+    render: function () {
+        var self = this;
+        var healthLevels = this.baseLevels.map(function(l, i) {
+            var levelsBefore = self.baseLevels.slice(0,i).reduce(function(acc,e) { return acc + e.levels; }, 0);
+            var aggravated = Math.min(Math.max(0, self.props.health.aggravated - levelsBefore), l.levels);
+            var lethal = Math.min(Math.min(Math.max(0, (self.props.health.aggravated + self.props.health.lethal) - levelsBefore), self.props.health.lethal), l.levels - aggravated);
+            var bashing = Math.min(Math.min(Math.max(0, (self.props.health.aggravated + self.props.health.lethal + self.props.health.bashing) - levelsBefore), self.props.health.bashing), l.levels - aggravated - lethal);;
+            return { penalty: l.penalty, levels: l.levels, bashing: bashing, lethal: lethal, aggravated: aggravated };
+        });
+        return (<BigPanel title="Health Levels" id="health-levels">
+            { healthLevels.map(function(l) {
+                return (<HealthLevel key={ l.penalty } penalty={ l.penalty } levels={ l.levels } bashing={ l.bashing } lethal={ l.lethal } aggravated={ l.aggravated }/>);
+            }) }
+        </BigPanel>);
     }
-})
+});
 
 var AttributesPanel = React.createClass({
     propTypes: {

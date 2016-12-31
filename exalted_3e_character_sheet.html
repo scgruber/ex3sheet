@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Exalted 3E Digital Character Sheet</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <script src="https://unpkg.com/react@15/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
@@ -38,40 +39,14 @@
           <div class="flex-2">____________________</div>
         </div>
         <div id="essence"></div>
-        <div id="willpower">
-          <header><h2>Willpower</h2></header>
-          <div id="permanent-willpower" class="centered">O O O O O O O O O O</div>
-          <div id="channeled-willpower" class="centered">[ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]</div>
-        </div>
+        <div id="willpower"></div>
         <div id="limit-break">
           <header><h2>Limit Break</h2></header>
           <div id="accumulated-limit" class="centered">[ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]</div>
           <div id="limit-condition" class="centered">Trigger: ______________________________<br/>_____________________________________<br/>_____________________________________</div>
         </div>
         <div id="experience"></div>
-        <div id="health-levels">
-          <header><h2>Health Levels</h2></header>
-          <div class="flex-container">
-            <div class="flex-1"><h3>-0</h3></div>
-            <div class="flex-5">[ ]</div>
-          </div>
-          <div class="flex-container">
-            <div class="flex-1"><h3>-1</h3></div>
-            <div class="flex-5">[ ] [ ]</div>
-          </div>
-          <div class="flex-container">
-            <div class="flex-1"><h3>-2</h3></div>
-            <div class="flex-5">[ ] [ ]</div>
-          </div>
-          <div class="flex-container">
-            <div class="flex-1"><h3>-4</h3></div>
-            <div class="flex-5">[ ]</div>
-          </div>
-          <div class="flex-container">
-            <div class="flex-1"><h3>I</h3></div>
-            <div class="flex-5">[ ]</div>
-          </div>
-        </div>
+        <div id="health-levels"></div>
       </div>
       <div id="stats"></div>
     </div>
@@ -93,6 +68,10 @@
                     "committed": 0
                 }
             },
+            "willpower": {
+                "channeled": 0,
+                "rating": 5
+            },
             "experience": {
                 "general": {
                     "free": 0,
@@ -102,6 +81,11 @@
                     "free": 0,
                     "total": 0
                 }
+            },
+            "health": {
+                "bashing": 0,
+                "lethal": 0,
+                "aggravated": 0
             },
             "attributes": {
                 "Strength": 3,
@@ -180,6 +164,8 @@
         ReactDOM.render(<Stats character={ character }/>, document.getElementById('stats'));
         ReactDOM.render(<ExperiencePanel experience={ character.experience }/>, document.getElementById('experience'));
         ReactDOM.render(<EssencePanel essence={ character.essence } experience={ character.experience }/>, document.getElementById('essence'));
+        ReactDOM.render(<WillpowerPanel willpower={ character.willpower }/>, document.getElementById('willpower'));
+        ReactDOM.render(<HealthLevelsPanel health={ character.health }/>, document.getElementById('health-levels'));
     </script>
   </body>
 </html>
