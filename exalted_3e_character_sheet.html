@@ -40,11 +40,7 @@
         </div>
         <div id="essence"></div>
         <div id="willpower"></div>
-        <div id="limit-break">
-          <header><h2>Limit Break</h2></header>
-          <div id="accumulated-limit" class="centered">[ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]</div>
-          <div id="limit-condition" class="centered">Trigger: ______________________________<br/>_____________________________________<br/>_____________________________________</div>
-        </div>
+        <div id="limit-break"></div>
         <div id="experience"></div>
         <div id="health-levels"></div>
       </div>
@@ -81,6 +77,11 @@
                     "free": 0,
                     "total": 0
                 }
+            },
+            "limit": {
+                "permanent": 0,
+                "accumulated": 0,
+                "trigger": "When faced with an opportunity to profit by the suffering of innocents"
             },
             "health": {
                 "bashing": 0,
@@ -166,6 +167,7 @@
         ReactDOM.render(<EssencePanel essence={ character.essence } experience={ character.experience }/>, document.getElementById('essence'));
         ReactDOM.render(<WillpowerPanel willpower={ character.willpower }/>, document.getElementById('willpower'));
         ReactDOM.render(<HealthLevelsPanel health={ character.health }/>, document.getElementById('health-levels'));
+        ReactDOM.render(<LimitBreakPanel limit={ character.limit }/>, document.getElementById('limit-break'));
     </script>
   </body>
 </html>

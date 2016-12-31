@@ -60,6 +60,8 @@ h6 { font-size: 1.000rem; }
 #willpower { font-size: 2.074rem; text-align: center; }
 #willpower-rating { margin-bottom: -1.5rem; }
 #experience { font-size: 1.728rem; }
+#limit-break { text-align: center; }
+#limit-accumulated { font-size: 2.074rem; }
 #health-levels { font-size: 2.489rem; }
 .health-level { width: 70%; margin: auto; }
 .health-level-penalty { text-align: right; margin-right: 2rem; }
