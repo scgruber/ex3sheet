@@ -562,20 +562,20 @@ var MeritsPanel = React.createClass({
                 return (<DottedStat key={ merit[0] + jdx } stat={ merit[0] } rating={ merit[1] } />);
             }) }
         </div>);
-},
+    },
 
-render: function () {
-    var self = this;
-    var flatMerits = Object.keys(this.props.merits).sort().map(function(m) {
-        return [m, self.props.merits[m]]
-    });
-    var columns = this.sortIntoColumns(flatMerits)
-    return (<BigPanel title="Merits" id="merits">
-      <div className="flex-container">
-        { columns.map(function(column, idx) { return self.renderColumn(column, idx) }) }
-      </div>
-    </BigPanel>);
-}
+    render: function () {
+        var self = this;
+        var flatMerits = Object.keys(this.props.merits).sort().map(function(m) {
+            return [m, self.props.merits[m]]
+        });
+        var columns = this.sortIntoColumns(flatMerits)
+        return (<BigPanel title="Merits" id="merits">
+          <div className="flex-container">
+            { columns.map(function(column, idx) { return self.renderColumn(column, idx) }) }
+          </div>
+        </BigPanel>);
+    }
 });
 
 var AttacksPanel = React.createClass({
