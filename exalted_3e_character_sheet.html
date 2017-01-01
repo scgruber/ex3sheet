@@ -128,12 +128,20 @@
                     "ability": "Thrown"
                 }
             },
-            "armor": {}
+            "armor": {},
+            "intimacies": {
+                "Winter Plum (Grief)": "Major",
+                "Quiet Ash (Wary Acceptance)": "Minor",
+                "The Unconquered Sun (Gratitude)": "Minor",
+                "I'll never turn my blade against one who's shown love/kindness to people like me": "Defining",
+                "Ten Scar Palm Society (Resentment)": "Major"
+            }
         }
     </script>
     <script type="text/jsx">
         var character = JSON.parse(document.getElementById('character-data').innerHTML);
         ReactDOM.render(<Stats character={ character }/>, document.getElementById('stats'));
+        ReactDOM.render(<IntimaciesPanel intimacies={ character.intimacies }/>, document.getElementById('intimacies'));
     </script>
   </body>
 </html>

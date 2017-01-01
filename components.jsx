@@ -102,6 +102,7 @@ var DottedStat = React.createClass({
     propTypes: {
         stat: React.PropTypes.string,
         rating: React.PropTypes.number,
+        max: React.PropTypes.number,
         statClassName: React.PropTypes.string
     },
 
@@ -110,7 +111,7 @@ var DottedStat = React.createClass({
             { this.props.stat ?
                 (<div className={ ["stat", "ellipsis-overflow", "flex-1", this.props.statClassName].join(' ') }>{ this.props.stat }</div>)
               : (<div className="stat blank-line flex-1">&nbsp;</div>) }
-            <div className="rating"><Dots fill={ this.props.rating } max={ 5 } /></div>
+            <div className="rating"><Dots fill={ this.props.rating } max={ this.props.max || 5 } /></div>
         </div>);
 }
 });
@@ -795,33 +796,33 @@ var DefensesPanel = React.createClass({
     }
 });
 
-var Stats = React.createClass({
-    propTypes: {
-        character: React.PropTypes.shape({
-            name: React.PropTypes.any.isRequired,
-            player: React.PropTypes.any.isRequired,
-            type: React.PropTypes.any.isRequired,
-            caste: React.PropTypes.any.isRequired,
-            concept: React.PropTypes.any.isRequired,
-            totem: React.PropTypes.any.isRequired,
-            essence: React.PropTypes.any.isRequired,
-            willpower: React.PropTypes.any.isRequired,
-            limit: React.PropTypes.any.isRequired,
-            experience: React.PropTypes.any.isRequired,
-            health: React.PropTypes.any.isRequired,
-            attributes: React.PropTypes.any.isRequired,
-            abilities: React.PropTypes.any.isRequired,
-            specialties: React.PropTypes.any.isRequired,
-            merits: React.PropTypes.any.isRequired,
-            artifacts: React.PropTypes.any.isRequired,
-            attacks: React.PropTypes.any.isRequired
-        })
-    },
+                        var Stats = React.createClass({
+                            propTypes: {
+                                character: React.PropTypes.shape({
+                                    name: React.PropTypes.any.isRequired,
+                                    player: React.PropTypes.any.isRequired,
+                                    type: React.PropTypes.any.isRequired,
+                                    caste: React.PropTypes.any.isRequired,
+                                    concept: React.PropTypes.any.isRequired,
+                                    totem: React.PropTypes.any.isRequired,
+                                    essence: React.PropTypes.any.isRequired,
+                                    willpower: React.PropTypes.any.isRequired,
+                                    limit: React.PropTypes.any.isRequired,
+                                    experience: React.PropTypes.any.isRequired,
+                                    health: React.PropTypes.any.isRequired,
+                                    attributes: React.PropTypes.any.isRequired,
+                                    abilities: React.PropTypes.any.isRequired,
+                                    specialties: React.PropTypes.any.isRequired,
+                                    merits: React.PropTypes.any.isRequired,
+                                    artifacts: React.PropTypes.any.isRequired,
+                                    attacks: React.PropTypes.any.isRequired
+                                })
+                            },
 
-    render: function() {
-        return (<div className="flex-container">
-            <section id="stats-left-column">
-                <CharacterPanel name        = { character.name }
+                            render: function() {
+                                return (<div className="flex-container">
+                                    <section id="stats-left-column">
+                                        <CharacterPanel name        = { character.name }
                                 player      = { character.player }
                                 type        = { character.type }
                                 caste       = { character.caste }
@@ -850,4 +851,54 @@ var Stats = React.createClass({
             </section>
         </div>);
     }
-})
+});
+
+var IntimaciesPanel = React.createClass({
+    propTypes: {
+        intimacies: React.PropTypes.objectOf(React.PropTypes.oneOf(['Defining', 'Major', 'Minor']))
+    },
+
+    compareIntimacies: function(a, b) {
+        var intensity = this.props.intimacies[a].localeCompare(this.props.intimacies[b]);
+        if (intensity != 0) {
+            return intensity;
+        } else {
+            return a.localeCompare(b);
+        }
+    },
+
+    splitInTwo: function(list) {
+        var left = [];
+        var right = [];
+        while (list.length > 0) {
+            left.push(list.shift());
+            if (list.length == 0) break;
+            right.push(list.shift());
+        }
+        return [left, right];
+    },
+
+    render: function() {
+        var self = this;
+        return (<BigPanel title="Intimacies" id="intimacies">
+            <div className="flex-container">
+                { this.splitInTwo(Object.keys(this.props.intimacies).sort(self.compareIntimacies)).map(function(l, i) {
+                    return (<div key={ i } className="flex-1">
+                        { l.map(function(i) {
+                            return (<div key={ i } className="flex-container">
+                                <div className="flex-5 ellipsis-overflow">{ i }</div>
+                                <div className="flex-1">{ self.props.intimacies[i] }</div>
+                            </div>);
+                        }) }
+                        { Array(Math.ceil(Object.keys(self.props.intimacies).length/2) + 1 - l.length).fill(1).map(function(x,i) {
+                            return (<div key={ i } className="flex-container">
+                                <div className="flex-5 blank-line">&nbsp;</div>
+                                <div className="flex-1 blank-line">&nbsp;</div>
+                            </div>);
+                        }) }
+                    </div>);
+                }) }
+            </div>
+        </BigPanel>)
+    }
+});
