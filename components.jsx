@@ -263,23 +263,33 @@ var EssencePanel = React.createClass({
     propTypes: {
         essence: React.PropTypes.shape({
             personal: React.PropTypes.shape({
-                free: React.PropTypes.number,
-                committed: React.PropTypes.number
+                free: React.PropTypes.number
             }),
             peripheral: React.PropTypes.shape({
-                free: React.PropTypes.number,
-                committed: React.PropTypes.number
+                free: React.PropTypes.number
             })
         }),
         experience: React.PropTypes.shape({
             general: React.PropTypes.shape({
                 total: React.PropTypes.number
             })
-        })
+        }),
+        artifacts: React.PropTypes.objectOf(React.PropTypes.shape({
+            attune: React.PropTypes.shape({
+                motes: React.PropTypes.number,
+                type: React.PropTypes.oneOf(['Personal', 'Peripheral'])
+            })
+        }))
     },
 
-    poolBreakdown: function(pool, props) {
-        return props.free + ' / ' + (pool - props.committed) + ' [' + props.committed + ']';
+    committed: function(type) {
+        var self = this;
+        return Object.keys(this.props.artifacts).filter(function(a) { return self.props.artifacts[a].attune.type === type; })
+            .map(function(a) { return self.props.artifacts[a].attune.motes; }).reduce(function(acc, e) { return acc+e; }, 0);
+    },
+
+    poolBreakdown: function(pool, props, committed) {
+        return props.free + ' / ' + (pool - committed) + ' [' + committed + ']';
     },
 
     render: function () {
@@ -296,8 +306,8 @@ var EssencePanel = React.createClass({
                 <Dots fill={ essence } max={ 5 }/>
             </div>
             <LittleTable columns={ ['Personal', 'Peripheral'] }
-                         values={ [ this.poolBreakdown(personalPool, this.props.essence.personal),
-                                    this.poolBreakdown(peripheralPool, this.props.essence.peripheral) ]} />
+                         values={ [ this.poolBreakdown(personalPool, this.props.essence.personal, this.committed('Personal')),
+                                    this.poolBreakdown(peripheralPool, this.props.essence.peripheral, this.committed('Peripheral')) ]} />
         </BigPanel>);
     }
 });
@@ -578,6 +588,39 @@ var MeritsPanel = React.createClass({
     }
 });
 
+var ArtifactsPanel = React.createClass({
+    propTypes: {
+        artifacts: React.PropTypes.objectOf(React.PropTypes.shape({
+            rating: React.PropTypes.number,
+            description: React.PropTypes.string,
+            evocations: React.PropTypes.arrayOf(React.PropTypes.string),
+            attune: React.PropTypes.shape({
+                motes: React.PropTypes.number,
+                type: React.PropTypes.oneOf(['Personal', 'Peripheral'])
+            })
+        })).isRequired
+    },
+
+    convertToRow: function(name, props) {
+        var rating = <Dots fill={ props.rating } max={ 5 } />;
+        var description = props.description;
+        var evocations = (<ul className="evocations">
+            { props.evocations.map(function(e) { return <li key={ e }>{ e }</li>; }) }
+        </ul>);
+        var attune = [props.attune.motes, props.attune.type === 'Personal' ? 'Pers' : 'Periph'].join(' ');
+        return [name, rating, description, evocations, attune];
+    },
+
+    render: function () {
+        var self = this;
+        return (<BigPanel title="Artifacts" id="artifacts">
+            <BigTable columns={ [ {title: "Name", width: 8}, {title: "Rating", width: 3}, {title: "Description", width: 10},
+                                {title: "Evocations", width: 10}, {title: "Attune", width: 3} ] }
+                    values={ Object.keys(this.props.artifacts).sort().map(function(a) { return self.convertToRow(a, self.props.artifacts[a]); }) } />
+        </BigPanel>);
+    }
+})
+
 var AttacksPanel = React.createClass({
     propTypes: {
         attacks: React.PropTypes.objectOf(React.PropTypes.shape({
@@ -645,6 +688,7 @@ var Stats = React.createClass({
             abilities: React.PropTypes.any.isRequired,
             specialties: React.PropTypes.any.isRequired,
             merits: React.PropTypes.any.isRequired,
+            artifacts: React.PropTypes.any.isRequired,
             attacks: React.PropTypes.any.isRequired
         })
     },
@@ -660,7 +704,8 @@ var Stats = React.createClass({
                                 totem       = { character.totem }
                                 abilities   = { character.abilities } />
                 <EssencePanel   essence     = { character.essence }
-                                experience  = { character.experience } />
+                                experience  = { character.experience }
+                                artifacts   = { character.artifacts } />
                 <WillpowerPanel willpower   = { character.willpower } />
                 <LimitBreakPanel    limit   = { character.limit } />
                 <ExperiencePanel    experience  = { character.experience } />
@@ -671,6 +716,7 @@ var Stats = React.createClass({
                 <AbilitiesPanel abilities={ this.props.character.abilities }/>
                 <SpecialtiesPanel specialties={ this.props.character.specialties }/>
                 <MeritsPanel merits={ this.props.character.merits }/>
+                <ArtifactsPanel artifacts={ this.props.character.artifacts }/>
                 <AttacksPanel attacks={ this.props.character.attacks }/>
             </section>
         </div>);

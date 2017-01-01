@@ -72,4 +72,6 @@ h6 { font-size: 1.000rem; }
 .ability-favored { font-weight: bold; }
 #specialties { font-size: 1.200rem; }
 #merits { font-size: 1.200rem; }
+#artifacts { font-size: 1.200rem; }
+.evocations { margin: 0; padding: 0; list-style-type: none; }
 #attacks { font-size: 1.200rem; }
