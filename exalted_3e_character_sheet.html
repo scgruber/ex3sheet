@@ -10,17 +10,7 @@
     <script type="text/jsx" src="./components.jsx"></script>
   </head>
   <body>
-    <div class="flex-container">
-      <div id="traits">
-        <div id="character"></div>
-        <div id="essence"></div>
-        <div id="willpower"></div>
-        <div id="limit-break"></div>
-        <div id="experience"></div>
-        <div id="health-levels"></div>
-      </div>
-      <div id="stats"></div>
-    </div>
+    <div id="stats"></div>
     <div id="intimacies">
     </div>
     <div id="charms">
@@ -144,12 +134,6 @@
     <script type="text/jsx">
         var character = JSON.parse(document.getElementById('character-data').innerHTML);
         ReactDOM.render(<Stats character={ character }/>, document.getElementById('stats'));
-        ReactDOM.render(<ExperiencePanel experience={ character.experience }/>, document.getElementById('experience'));
-        ReactDOM.render(<EssencePanel essence={ character.essence } experience={ character.experience }/>, document.getElementById('essence'));
-        ReactDOM.render(<WillpowerPanel willpower={ character.willpower }/>, document.getElementById('willpower'));
-        ReactDOM.render(<HealthLevelsPanel health={ character.health }/>, document.getElementById('health-levels'));
-        ReactDOM.render(<LimitBreakPanel limit={ character.limit }/>, document.getElementById('limit-break'));
-        ReactDOM.render(<CharacterPanel name={ character.name } player={ character.player } type={ character.type } caste={ character.caste } concept={ character.concept } totem={ character.totem } abilities={ character.abilities }/>, document.getElementById('character'));
     </script>
   </body>
 </html>

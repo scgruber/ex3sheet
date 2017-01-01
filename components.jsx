@@ -630,6 +630,17 @@ var AttacksPanel = React.createClass({
 var Stats = React.createClass({
     propTypes: {
         character: React.PropTypes.shape({
+            name: React.PropTypes.any.isRequired,
+            player: React.PropTypes.any.isRequired,
+            type: React.PropTypes.any.isRequired,
+            caste: React.PropTypes.any.isRequired,
+            concept: React.PropTypes.any.isRequired,
+            totem: React.PropTypes.any.isRequired,
+            essence: React.PropTypes.any.isRequired,
+            willpower: React.PropTypes.any.isRequired,
+            limit: React.PropTypes.any.isRequired,
+            experience: React.PropTypes.any.isRequired,
+            health: React.PropTypes.any.isRequired,
             attributes: React.PropTypes.any.isRequired,
             abilities: React.PropTypes.any.isRequired,
             specialties: React.PropTypes.any.isRequired,
@@ -639,12 +650,29 @@ var Stats = React.createClass({
     },
 
     render: function() {
-        return (<div>
-            <AttributesPanel attributes={ this.props.character.attributes }/>
-            <AbilitiesPanel abilities={ this.props.character.abilities }/>
-            <SpecialtiesPanel specialties={ this.props.character.specialties }/>
-            <MeritsPanel merits={ this.props.character.merits }/>
-            <AttacksPanel attacks={ this.props.character.attacks }/>
+        return (<div className="flex-container">
+            <section id="stats-left-column">
+                <CharacterPanel name        = { character.name }
+                                player      = { character.player }
+                                type        = { character.type }
+                                caste       = { character.caste }
+                                concept     = { character.concept }
+                                totem       = { character.totem }
+                                abilities   = { character.abilities } />
+                <EssencePanel   essence     = { character.essence }
+                                experience  = { character.experience } />
+                <WillpowerPanel willpower   = { character.willpower } />
+                <LimitBreakPanel    limit   = { character.limit } />
+                <ExperiencePanel    experience  = { character.experience } />
+                <HealthLevelsPanel  health  = { character.health } />
+            </section>
+            <section id="stats-right-column">
+                <AttributesPanel attributes={ this.props.character.attributes }/>
+                <AbilitiesPanel abilities={ this.props.character.abilities }/>
+                <SpecialtiesPanel specialties={ this.props.character.specialties }/>
+                <MeritsPanel merits={ this.props.character.merits }/>
+                <AttacksPanel attacks={ this.props.character.attacks }/>
+            </section>
         </div>);
     }
 })
