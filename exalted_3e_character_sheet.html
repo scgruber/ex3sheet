@@ -20,7 +20,7 @@
     <script type="application/json/nobabel" id="character-data">
         {
             "name": "Isthus Fithi",
-            "player": "Otso",
+            "player": "Otso (demo)",
             "type": "Solar Exalted",
             "caste": "Night",
             "concept": "Blade-for-hire who grew up on the street",
@@ -59,7 +59,7 @@
             },
             "attributes": {
                 "Strength": 3,
-                "Dexterity": 4,
+                "Dexterity": 5,
                 "Stamina": 4,
                 "Charisma": 3,
                 "Manipulation": 2,
@@ -83,7 +83,7 @@
                 "Lore": { "rating": 0 },
                 "Martial Arts": { "subs": {} },
                 "Medicine": { "rating": 0 },
-                "Melee": { "favored": true, "rating": 3 },
+                "Melee": { "favored": true, "rating": 4 },
                 "Occult": { "favored": true, "rating": 1 },
                 "Performance": { "rating": 0 },
                 "Presence": { "rating": 1 },
@@ -91,7 +91,7 @@
                 "Ride": { "rating": 0 },
                 "Sail": { "rating": 0 },
                 "Socialize": { "rating": 1 },
-                "Stealth": { "favored": true, "rating": 3, "supernal": true },
+                "Stealth": { "favored": true, "rating": 4, "supernal": true },
                 "Survival": { "rating": 0 },
                 "Thrown": { "rating": 0 },
                 "War": { "rating": 0 }
@@ -105,7 +105,8 @@
                 "Danger Sense": 3,
                 "Fast Reflexes": 3,
                 "Ambidextrous": 1,
-                "Mentor: Quiet Ash": 3
+                "Mentor: Quiet Ash": 3,
+                "Contacts: Street People of Nexus": 1
             },
             "artifacts": {},
             "attacks":{
@@ -270,6 +271,24 @@
                     "duration": "Scene",
                     "effects": "Roll [Dexterity]+[Stealth] vs [Resolve] to become imperceptible",
                     "source": "EX3 p405"
+                },
+                "Blinding Battle Feint": {
+                    "cost": {
+                        "motes": 3
+                    },
+                    "type": "Supplemental",
+                    "duration": "Instant",
+                    "effects": "Roll [Dexterity]+[Stealth] to Join Battle. Start concealed from those with lower initiative.",
+                    "source": "EX3 p404"
+                },
+                "Stalking Wolf Attitude": {
+                    "cost": {
+                        "motes": 5
+                    },
+                    "type": "Simple",
+                    "duration": "Indefinite",
+                    "effects": "Ignore movement penalty to Stealth. Gain initiative from evading detection. Cumulative -1 Stealth penalty/round. Initiative lost if not used in a decisive attack.",
+                    "source": "EX3 p404"
                 }
             }
         }
