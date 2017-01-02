@@ -137,7 +137,11 @@ var BigTable = React.createClass({
                 return (<div key={ v.join() } className="big-table-row flex-container">
                     { v.map(function(c, idx) {
                         var col = self.props.columns[idx];
-                        return (<div key={ col.title } className="flex-inline" style={ {flex: col.width} }>{ Array.isArray(c) ? c.join(', ') : c }</div>);
+                        if (c === null || c === undefined) {
+                            return (<div key={ col.title } className="blank-line flex-inline" style={ {flex: col.width} }>&nbsp;</div>)
+                        } else {
+                            return (<div key={ col.title } className="flex-inline" style={ {flex: col.width} }>{ Array.isArray(c) ? c.join(', ') : c }</div>);
+                        }
                     }) }
                 </div>);
             })}
@@ -190,6 +194,9 @@ var HealthLevel = React.createClass({
     render: function () {
         var levels = [];
         for (var i=0; i<this.props.levels; i++) {
+            if ((i % 5 == 0) && i != 0) {
+                levels.push(<br/>);
+            }
             if (i < this.props.aggravated) {
                 levels.push(this.aggravatedLevel);
             } else if (i < (this.props.aggravated + this.props.lethal)) {
@@ -200,7 +207,7 @@ var HealthLevel = React.createClass({
                 levels.push(this.openLevel);
             }
         }
-        while (levels.length < 5) {
+        for (var i=0; i<(5-(this.props.levels%5)); i++) {
             levels.push(this.inactiveLevel);
         }
         return (<div className="health-level flex-container">
@@ -382,11 +389,17 @@ var LimitBreakPanel = React.createClass({
 
 var HealthLevelsPanel = React.createClass({
     propTypes: {
+        attributes: React.PropTypes.shape({
+            'Stamina': React.PropTypes.number
+        }),
         health: React.PropTypes.shape({
             bashing: React.PropTypes.number,
             lethal: React.PropTypes.number,
             aggravated: React.PropTypes.number
-        })
+        }),
+        charms: React.PropTypes.objectOf(React.PropTypes.shape({
+            multi: React.PropTypes.number
+        }))
     },
 
     baseLevels: [
@@ -397,10 +410,37 @@ var HealthLevelsPanel = React.createClass({
         { penalty: 'I', levels: 1 }
     ],
 
+    totalLevels: function() {
+        var self = this;
+        if (this.props.attributes['Stamina'] <= 2) {
+            var oxBodyLevels = [
+                { penalty: -1, levels: 1 },
+                { penalty: -2, levels: 1 },
+            ];
+        } else if (this.props.attributes['Stamina'] <= 4) {
+            var oxBodyLevels = [
+                { penalty: -1, levels: 1 },
+                { penalty: -2, levels: 2 },
+            ];
+        } else {
+            var oxBodyLevels = [
+                { penalty: -0, levels: 1 },
+                { penalty: -1, levels: 1 },
+                { penalty: -2, levels: 1 },
+            ];
+        }
+        return this.baseLevels.map(function(l) {
+            var oxBodyLevel = oxBodyLevels.find(function(obl) { return obl.penalty === l.penalty; });
+            var bonusLevels = self.props.charms['Ox-Body Technique'] ? ((self.props.charms['Ox-Body Technique'].multi || 1) * (oxBodyLevel || { levels: 0 }).levels) : 0;
+            return { penalty: l.penalty, levels: l.levels + bonusLevels };
+        });
+    },
+
     render: function () {
         var self = this;
-        var healthLevels = this.baseLevels.map(function(l, i) {
-            var levelsBefore = self.baseLevels.slice(0,i).reduce(function(acc,e) { return acc + e.levels; }, 0);
+        var totalLevels = this.totalLevels();
+        var healthLevels = totalLevels.map(function(l, i) {
+            var levelsBefore = totalLevels.slice(0,i).reduce(function(acc,e) { return acc + e.levels; }, 0);
             var aggravated = Math.min(Math.max(0, self.props.health.aggravated - levelsBefore), l.levels);
             var lethal = Math.min(Math.min(Math.max(0, (self.props.health.aggravated + self.props.health.lethal) - levelsBefore), self.props.health.lethal), l.levels - aggravated);
             var bashing = Math.min(Math.min(Math.max(0, (self.props.health.aggravated + self.props.health.lethal + self.props.health.bashing) - levelsBefore), self.props.health.bashing), l.levels - aggravated - lethal);;
@@ -815,7 +855,8 @@ var DefensesPanel = React.createClass({
                                     specialties: React.PropTypes.any.isRequired,
                                     merits: React.PropTypes.any.isRequired,
                                     artifacts: React.PropTypes.any.isRequired,
-                                    attacks: React.PropTypes.any.isRequired
+                                    attacks: React.PropTypes.any.isRequired,
+                                    charms: React.PropTypes.any.isRequired,
                                 })
                             },
 
@@ -835,7 +876,9 @@ var DefensesPanel = React.createClass({
                 <WillpowerPanel willpower   = { character.willpower } />
                 <LimitBreakPanel    limit   = { character.limit } />
                 <ExperiencePanel    experience  = { character.experience } />
-                <HealthLevelsPanel  health  = { character.health } />
+                <HealthLevelsPanel  attributes  = { character.attributes }
+                                    health      = { character.health }
+                                    charms      = { character.charms } />
             </section>
             <section id="stats-right-column">
                 <AttributesPanel attributes={ this.props.character.attributes }/>
@@ -900,5 +943,71 @@ var IntimaciesPanel = React.createClass({
                 }) }
             </div>
         </BigPanel>)
+    }
+});
+
+var CharmsPanel = React.createClass({
+    propTypes: {
+        charms: React.PropTypes.objectOf(React.PropTypes.shape({
+            multi: React.PropTypes.number,
+            cost: React.PropTypes.shape({
+                motes: React.PropTypes.number,
+                motesPer: React.PropTypes.number,
+                willpower: React.PropTypes.number,
+                bashing: React.PropTypes.number,
+                lethal: React.PropTypes.number,
+                aggravated: React.PropTypes.number,
+                anima: React.PropTypes.number,
+                initiative: React.PropTypes.number,
+                initiativePer: React.PropTypes.number,
+                experience: React.PropTypes.number,
+                silverExperience: React.PropTypes.number,
+                goldExperience: React.PropTypes.number,
+                whiteExperience: React.PropTypes.number
+            }),
+            type: React.PropTypes.string,
+            duration: React.PropTypes.string,
+            effects: React.PropTypes.string,
+            source: React.PropTypes.string
+        }))
+    },
+
+    convertToRow: function(name, props) {
+        var name = props.multi ? [name, "(x" + props.multi + ")"].join(' ') : name;
+        var source = props.source;
+        var costMap = [
+            ['motes', 'm'], ['motesPer', 'm per'], ['willpower', 'wp'], ['bashing', 'hl'], ['lethal', 'lhl'], ['aggravated', 'ahl'],
+            ['anima', 'a'], ['initiative', 'i'], ['initiativePer', 'i per'], ['experience', 'xp'], ['silverExperience', 'sxp'],
+            ['goldExperience', 'gxp'], ['whiteExperience', 'wxp']
+        ];
+        if (props.cost) {
+            if (Object.keys(props.cost).length === 0) {
+                var cost = "\u2014";
+            } else {
+                var cost = costMap.map(function(c) {
+                    return props.cost[c[0]] ? [props.cost[c[0]], c[1]].join('') : null;
+                }).filter(function(c) { return c; }).join(', ');
+            }
+        } else {
+            var cost = null;
+        }
+        var type = {
+            "Simple": "Simp",
+            "Supplemental": "Sup",
+            "Reflexive": "Ref",
+            "Permanent": "Perm"
+        }[props.type];
+        var duration = props.duration;
+        var effects = props.effects;
+        return [name, cost, type, duration, effects, source];
+    },
+
+    render: function () {
+        var self = this;
+        return (<BigPanel title="Charms" id="charms">
+            <BigTable columns={ [ {title: "Name", width: 6}, {title: "Cost", width: 2}, {title: "Type", width: 1}, {title: "Duration", width: 2},
+                        {title: "Effects", width: 15}, {title: "Source", width: 2} ] }
+                    values={ Object.keys(this.props.charms).sort().map(function(c) { return self.convertToRow(c, self.props.charms[c]); }) } />
+        </BigPanel>);
     }
 });

@@ -135,6 +135,142 @@
                 "The Unconquered Sun (Gratitude)": "Minor",
                 "I'll never turn my blade against one who's shown love/kindness to people like me": "Defining",
                 "Ten Scar Palm Society (Resentment)": "Major"
+            },
+            "charms": {
+                "Graceful Crane Stance": {
+                    "cost": {
+                        "motes": 3
+                    },
+                    "type": "Reflexive",
+                    "duration": "Scene",
+                    "effects": "Perfect balance. Can stand/run on objects too narrow or weak to support.",
+                    "source": "EX3 p261"
+                },
+                "Monkey Leap Technique": {
+                    "cost": {
+                        "motes": 2
+                    },
+                    "type": "Supplemental",
+                    "duration": "Instant",
+                    "effects": "Leap forward/up one range band. Subsequent invocations for 1m.",
+                    "source": "EX3 p261"
+                },
+                "Reed in the Wind": {
+                    "cost": {
+                        "initiativePer": 2
+                    },
+                    "type": "Reflexive",
+                    "duration": "Instant",
+                    "effects": "Raise Evasion by 1 per 2m. Does not count as charm dice.",
+                    "source": "EX3 p299"
+                },
+                "Drifting Leaf Elusion": {
+                    "cost": {
+                        "motes": 1
+                    },
+                    "type": "Reflexive",
+                    "duration": "Instant",
+                    "effects": "Evade attack with successes equal to Evasion",
+                    "source": "EX3 p300"
+                },
+                "Reflex Sidestep Technique": {
+                    "cost": {
+                        "motes": 5
+                    },
+                    "type": "Reflexive",
+                    "duration": "Instant",
+                    "effects": "For unexpected attack, set Evasion to 2. Add 1 for every 1 or 2 rolled in attack.",
+                    "source": "EX3 p299"
+                },
+                "Excellent Strike": {
+                    "cost": {
+                        "motes": 3
+                    },
+                    "type": "Supplemental",
+                    "duration": "Instant",
+                    "effects": "+1 automatic success. Reroll 1s.",
+                    "source": "EX3 p346"
+                },
+                "Fire and Stones Strike": {
+                    "cost": {
+                        "motesPer": 1
+                    },
+                    "type": "Supplemental",
+                    "duration": "Instant",
+                    "effects": "Withering: add up to [Strength] post-soak damage dice. Decisive: transfer up to [Essence] successes from attack to damage.",
+                    "source": "EX3 p346"
+                },
+                "Ox-Body Technique": {
+                    "cost": {},
+                    "type": "Permanent",
+                    "duration": "Permanent",
+                    "effects": "Additional health levels",
+                    "source": "EX3 p375"
+                },
+                "Sensory Acuity Prana": {
+                    "cost": {
+                        "motes": 5
+                    },
+                    "type": "Reflexive",
+                    "duration": "Scene",
+                    "effects": "Double 9s on Awareness. If Unsurpassed Sense is active, reroll 6s.",
+                    "source": "EX3 p267"
+                },
+                "Seasoned Criminal Method": {
+                    "cost": {},
+                    "type": "Permanent",
+                    "duration": "Permanent",
+                    "effects": "Adopt criminal distinctions at will",
+                    "source": "EX3 p315"
+                },
+                "Perfect Shadow Stillness": {
+                    "cost": {
+                        "motes": 1,
+                        "willpower": 1
+                    },
+                    "type": "Reflexive",
+                    "duration": "Instant",
+                    "effects": "Reroll non-10s on Stealth",
+                    "source": "EX3 p403"
+                },
+                "Invisible Statue Spirit": {
+                    "cost": {
+                        "motes": 5
+                    },
+                    "type": "Reflexive",
+                    "duration": "Instant",
+                    "effects": "Perfectly invisible until move",
+                    "source": "EX3 p403"
+                },
+                "Easily-Overlooked Presence Method": {
+                    "cost": {
+                        "motes": 3
+                    },
+                    "type": "Simple",
+                    "duration": "Scene",
+                    "effects": "Cannot be noticed unless taking overt action",
+                    "source": "EX3 p403"
+                },
+                "Blurred Form Style": {
+                    "cost": {
+                        "motes": 7,
+                        "willpower": 1
+                    },
+                    "type": "Reflexive",
+                    "duration": "Indefinite",
+                    "effects": "Can Stealth w/o cover. +[Essence] automatic successes to Stealth. After moving/attacking can be seen. Ends if hit by attack.",
+                    "source": "EX3 p405"
+                },
+                "Mental Invisibility Technique": {
+                    "cost": {
+                        "motes": 5,
+                        "willpower": 1
+                    },
+                    "type": "Simple",
+                    "duration": "Scene",
+                    "effects": "Roll [Dexterity]+[Stealth] vs [Resolve] to become imperceptible",
+                    "source": "EX3 p405"
+                }
             }
         }
     </script>
@@ -142,6 +278,7 @@
         var character = JSON.parse(document.getElementById('character-data').innerHTML);
         ReactDOM.render(<Stats character={ character }/>, document.getElementById('stats'));
         ReactDOM.render(<IntimaciesPanel intimacies={ character.intimacies }/>, document.getElementById('intimacies'));
+        ReactDOM.render(<CharmsPanel charms={ character.charms }/>, document.getElementById('charms'));
     </script>
   </body>
 </html>

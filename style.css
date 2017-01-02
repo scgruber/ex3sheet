@@ -34,6 +34,8 @@ h6 { font-size: 1.000rem; }
 
 /* BigTable */
 .big-table > header { font-variant: small-caps; }
+.big-table-row { padding-top: 0.25rem; padding-bottom: 0.5rem; }
+.big-table-row:nth-child(2n) { background-color: #EEEEEE; }
 
 /* LittleTable */
 .little-table { text-align: center; }
