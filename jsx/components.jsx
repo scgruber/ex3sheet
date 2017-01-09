@@ -1,4 +1,6 @@
-﻿var BigPanel = React.createClass({
+var React = require('react');
+
+var BigPanel = React.createClass({
     propTypes: {
         title: React.PropTypes.string.isRequired,
         id: React.PropTypes.string
@@ -836,49 +838,49 @@ var DefensesPanel = React.createClass({
     }
 });
 
-                        var Stats = React.createClass({
-                            propTypes: {
-                                character: React.PropTypes.shape({
-                                    name: React.PropTypes.any.isRequired,
-                                    player: React.PropTypes.any.isRequired,
-                                    type: React.PropTypes.any.isRequired,
-                                    caste: React.PropTypes.any.isRequired,
-                                    concept: React.PropTypes.any.isRequired,
-                                    totem: React.PropTypes.any.isRequired,
-                                    essence: React.PropTypes.any.isRequired,
-                                    willpower: React.PropTypes.any.isRequired,
-                                    limit: React.PropTypes.any.isRequired,
-                                    experience: React.PropTypes.any.isRequired,
-                                    health: React.PropTypes.any.isRequired,
-                                    attributes: React.PropTypes.any.isRequired,
-                                    abilities: React.PropTypes.any.isRequired,
-                                    specialties: React.PropTypes.any.isRequired,
-                                    merits: React.PropTypes.any.isRequired,
-                                    artifacts: React.PropTypes.any.isRequired,
-                                    attacks: React.PropTypes.any.isRequired,
-                                    charms: React.PropTypes.any.isRequired,
-                                })
-                            },
+        var Stats = React.createClass({
+        propTypes: {
+        character: React.PropTypes.shape({
+            name: React.PropTypes.any.isRequired,
+            player: React.PropTypes.any.isRequired,
+            type: React.PropTypes.any.isRequired,
+            caste: React.PropTypes.any.isRequired,
+            concept: React.PropTypes.any.isRequired,
+            totem: React.PropTypes.any.isRequired,
+            essence: React.PropTypes.any.isRequired,
+            willpower: React.PropTypes.any.isRequired,
+            limit: React.PropTypes.any.isRequired,
+            experience: React.PropTypes.any.isRequired,
+            health: React.PropTypes.any.isRequired,
+            attributes: React.PropTypes.any.isRequired,
+            abilities: React.PropTypes.any.isRequired,
+            specialties: React.PropTypes.any.isRequired,
+            merits: React.PropTypes.any.isRequired,
+            artifacts: React.PropTypes.any.isRequired,
+            attacks: React.PropTypes.any.isRequired,
+            charms: React.PropTypes.any.isRequired,
+        })
+        },
 
-                            render: function() {
-                                return (<div className="flex-container">
-                                    <section id="stats-left-column">
-                                        <CharacterPanel name        = { character.name }
-                                player      = { character.player }
-                                type        = { character.type }
-                                caste       = { character.caste }
-                                concept     = { character.concept }
-                                totem       = { character.totem }
-                                abilities   = { character.abilities } />
-                <EssencePanel   essence     = { character.essence }
-                                experience  = { character.experience }
-                                artifacts   = { character.artifacts } />
-                <WillpowerPanel willpower   = { character.willpower } />
-                <LimitBreakPanel    limit   = { character.limit } />
-                <ExperiencePanel    experience  = { character.experience } />
-                <HealthLevelsPanel  attributes  = { character.attributes }
-                                    health      = { character.health }
-                                    charms      = { character.charms } />
+        render: function() {
+        return (<div className="flex-container">
+            <section id="stats-left-column">
+                <CharacterPanel name        = { this.props.character.name }
+                                player      = { this.props.character.player }
+                                type        = { this.props.character.type }
+                                caste       = { this.props.character.caste }
+                                concept     = { this.props.character.concept }
+                                totem       = { this.props.character.totem }
+                                abilities   = { this.props.character.abilities } />
+                <EssencePanel   essence     = { this.props.character.essence }
+                                experience  = { this.props.character.experience }
+                                artifacts   = { this.props.character.artifacts } />
+                <WillpowerPanel willpower   = { this.props.character.willpower } />
+                <LimitBreakPanel    limit   = { this.props.character.limit } />
+                <ExperiencePanel    experience  = { this.props.character.experience } />
+                <HealthLevelsPanel  attributes  = { this.props.character.attributes }
+                                    health      = { this.props.character.health }
+                                    charms      = { this.props.character.charms } />
             </section>
             <section id="stats-right-column">
                 <AttributesPanel attributes={ this.props.character.attributes }/>
@@ -1011,3 +1013,7 @@ var CharmsPanel = React.createClass({
         </BigPanel>);
     }
 });
+
+module.exports.Stats = Stats;
+module.exports.IntimaciesPanel = IntimaciesPanel;
+module.exports.CharmsPanel = CharmsPanel;
