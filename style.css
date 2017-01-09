@@ -1,6 +1,5 @@
-﻿@font-face { font-family: 'Noto Sans Symbols'; src: url('./NotoSansSymbols-Regular.ttf'); }
 * { box-sizing: border-box; }
-html { font-family: 'Noto Sans Symbols', 'Noto Sans', sans-serif; font-size: 14px; }
+html { font-family: 'Noto Sans', sans-serif; font-size: 14px; }
 body { margin: 2rem auto; width: 90%; max-width: 1200px; }
 
 h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
