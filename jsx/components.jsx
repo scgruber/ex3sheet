@@ -1,20 +1,6 @@
 var React = require('react');
 
-var BigPanel = React.createClass({
-    propTypes: {
-        title: React.PropTypes.string.isRequired,
-        id: React.PropTypes.string
-    },
-
-    render: function() {
-        return (<section className="big-panel" id={ this.props.id }>
-            <header><h3>{ this.props.title }</h3></header>
-            <div className="big-panel-content">
-                { this.props.children }
-            </div>
-        </section>);
-    }
-});
+var BigPanel = require('./components/big_panel');
 
 var Marks = React.createClass({
     propTypes: {
@@ -898,56 +884,6 @@ var DefensesPanel = React.createClass({
     }
 });
 
-var IntimaciesPanel = React.createClass({
-    propTypes: {
-        intimacies: React.PropTypes.objectOf(React.PropTypes.oneOf(['Defining', 'Major', 'Minor']))
-    },
-
-    compareIntimacies: function(a, b) {
-        var intensity = this.props.intimacies[a].localeCompare(this.props.intimacies[b]);
-        if (intensity != 0) {
-            return intensity;
-        } else {
-            return a.localeCompare(b);
-        }
-    },
-
-    splitInTwo: function(list) {
-        var left = [];
-        var right = [];
-        while (list.length > 0) {
-            left.push(list.shift());
-            if (list.length == 0) break;
-            right.push(list.shift());
-        }
-        return [left, right];
-    },
-
-    render: function() {
-        var self = this;
-        return (<BigPanel title="Intimacies" id="intimacies">
-            <div className="flex-container">
-                { this.splitInTwo(Object.keys(this.props.intimacies).sort(self.compareIntimacies)).map(function(l, i) {
-                    return (<div key={ i } className="flex-1">
-                        { l.map(function(i) {
-                            return (<div key={ i } className="flex-container">
-                                <div className="flex-5 ellipsis-overflow">{ i }</div>
-                                <div className="flex-1">{ self.props.intimacies[i] }</div>
-                            </div>);
-                        }) }
-                        { Array(Math.ceil(Object.keys(self.props.intimacies).length/2) + 1 - l.length).fill(1).map(function(x,i) {
-                            return (<div key={ i } className="flex-container">
-                                <div className="flex-5 blank-line">&nbsp;</div>
-                                <div className="flex-1 blank-line">&nbsp;</div>
-                            </div>);
-                        }) }
-                    </div>);
-                }) }
-            </div>
-        </BigPanel>)
-    }
-});
-
 var CharmsPanel = React.createClass({
     propTypes: {
         charms: React.PropTypes.objectOf(React.PropTypes.shape({
@@ -1015,5 +951,4 @@ var CharmsPanel = React.createClass({
 });
 
 module.exports.Stats = Stats;
-module.exports.IntimaciesPanel = IntimaciesPanel;
 module.exports.CharmsPanel = CharmsPanel;

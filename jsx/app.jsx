@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var components = require('./components');
 var Stats = components.Stats;
-var IntimaciesPanel = components.IntimaciesPanel;
+var IntimaciesPanel = require('./panels/intimacies');
 var CharmsPanel = components.CharmsPanel;
 
 var character = JSON.parse(document.getElementById('character-data').innerHTML);
