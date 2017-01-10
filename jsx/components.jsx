@@ -4,13 +4,7 @@ var BigPanel = require('./components/big_panel');
 var Marks = require('./components/marks');
 var Dots = require('./components/dots');
 var Box = require('./components/box');
-
-var Boxes = React.createClass({
-    render: function () {
-        return (<Marks openMark={ <Box mode="open"/> } fillMark={ <Box mode="cross"/> } disableMark={ <Box mode="light"/> } fill={ this.props.fill } max={ this.props.max } enabled={ this.props.enabled }/>);
-}
-});
-
+var Boxes = require('./components/boxes');
 var DottedStat = require('./components/dotted_stat');
 var BigTable = require('./components/big_table');
 
@@ -168,27 +162,7 @@ var ExperiencePanel = React.createClass({
 }
 });
 
-var LimitBreakPanel = React.createClass({
-    propTypes: {
-        limit: React.PropTypes.shape({
-            permanent: React.PropTypes.number.isRequired,
-            accumulated: React.PropTypes.number.isRequired,
-            trigger: React.PropTypes.string.isRequired
-        })
-    },
-
-    render: function () {
-        return (<BigPanel title="Limit Break" id="limit-break">
-            <div id="limit-accumulated">
-                <Boxes fill={ this.props.limit.accumulated } max={ 10 } enabled={ 10 - this.props.limit.permanent } />
-            </div>
-            <div id="limit-trigger">
-                { this.props.limit.trigger.length === 0 ? <div className="blank-line"> </div> : <div>{ this.props.limit.trigger }</div> }
-            </div>
-        </BigPanel>);
-    }
-});
-
+var LimitBreakPanel = require('./panels/limit_break');
 var HealthLevelsPanel = require('./panels/health_levels');
 var AttributesPanel = require('./panels/attributes');
 var AbilitiesPanel = require('./panels/abilities');
