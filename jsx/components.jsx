@@ -97,26 +97,7 @@ var EssencePanel = React.createClass({
     }
 });
 
-var WillpowerPanel = React.createClass({
-    propTypes: {
-        willpower: React.PropTypes.shape({
-            channeled: React.PropTypes.number,
-            rating: React.PropTypes.number
-        })
-    },
-
-    render: function () {
-        return (<BigPanel title="Willpower" id="willpower">
-            <div id="willpower-rating">
-                <Dots fill={ this.props.willpower.rating } max={ 10 } />
-            </div>
-            <div id="willpower-channels">
-                <Boxes fill={ this.props.willpower.channeled } max={ 10 } enabled={ this.props.willpower.rating } />
-            </div>
-        </BigPanel>);
-    }
-});
-
+var WillpowerPanel = require('./panels/willpower');
 var ExperiencePanel = require('./panels/experience');
 var LimitBreakPanel = require('./panels/limit_break');
 var HealthLevelsPanel = require('./panels/health_levels');
