@@ -1,52 +1,8 @@
 var React = require('react');
 
 var BigPanel = require('./components/big_panel');
-
-var Marks = React.createClass({
-    propTypes: {
-        openMark: React.PropTypes.node.isRequired,
-        fillMark: React.PropTypes.node.isRequired,
-        disableMark: React.PropTypes.node,
-        fill: React.PropTypes.number.isRequired,
-        max: React.PropTypes.number.isRequired,
-        enabled: React.PropTypes.number,
-    },
-
-    render: function(){
-        var output = [];
-        var enabled = this.props.enabled || this.props.max;
-        for (var i=0; i<enabled; i++) {
-            if (i < this.props.fill) {
-                output.push(this.props.fillMark);
-            } else {
-                output.push(this.props.openMark);
-            }
-        }
-        while (output.length < this.props.max) {
-            output.push(this.props.disableMark);
-        }
-        return (<span className="marks">{ output }</span>);
-    }
-});
-
-var Dot = React.createClass({
-    propTypes: {
-        filled: React.PropTypes.bool
-    },
-
-    render: function () {
-        var classes = ['dot', (this.props.filled ? 'filled' : 'open')].join(' ');
-        return (<svg width="0.6em" height="1em" viewBox="0.2 0 0.6 1">
-            <circle className={ classes } cx="0.5" cy="0.5" r="0.225"></circle>
-        </svg>);
-    }
-});
-
-var Dots = React.createClass({
-    render: function () {
-        return (<Marks openMark={ <Dot filled={ false }/> } fillMark={ <Dot filled={ true }/> } fill={ this.props.fill } max={ this.props.max }/>);
-    }
-});
+var Marks = require('./components/marks');
+var Dots = require('./components/dots');
 
 var Box = React.createClass({
     propTypes: {
@@ -567,39 +523,7 @@ var MeritsPanel = React.createClass({
     }
 });
 
-var ArtifactsPanel = React.createClass({
-    propTypes: {
-        artifacts: React.PropTypes.objectOf(React.PropTypes.shape({
-            rating: React.PropTypes.number,
-            description: React.PropTypes.string,
-            evocations: React.PropTypes.arrayOf(React.PropTypes.string),
-            attune: React.PropTypes.shape({
-                motes: React.PropTypes.number,
-                type: React.PropTypes.oneOf(['Personal', 'Peripheral'])
-            })
-        })).isRequired
-    },
-
-    convertToRow: function(name, props) {
-        var rating = <Dots fill={ props.rating } max={ 5 } />;
-        var description = props.description;
-        var evocations = (<ul className="evocations">
-            { props.evocations.map(function(e) { return <li key={ e }>{ e }</li>; }) }
-        </ul>);
-        var attune = [props.attune.motes, props.attune.type === 'Personal' ? 'Pers' : 'Periph'].join(' ');
-        return [name, rating, description, evocations, attune];
-    },
-
-    render: function () {
-        var self = this;
-        return (<BigPanel title="Artifacts" id="artifacts">
-            <BigTable columns={ [ {title: "Name", width: 8}, {title: "Rating", width: 3}, {title: "Description", width: 10},
-                                {title: "Evocations", width: 10}, {title: "Attune", width: 3} ] }
-                    values={ Object.keys(this.props.artifacts).sort().map(function(a) { return self.convertToRow(a, self.props.artifacts[a]); }) } />
-        </BigPanel>);
-    }
-})
-
+var ArtifactsPanel = require('./panels/artifacts');
 var AttacksPanel = require('./panels/attacks');
 var DefensesPanel = require('./panels/defenses');
 
