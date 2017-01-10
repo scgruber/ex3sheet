@@ -7,29 +7,7 @@ var Box = require('./components/box');
 var Boxes = require('./components/boxes');
 var DottedStat = require('./components/dotted_stat');
 var BigTable = require('./components/big_table');
-
-var LittleTable = React.createClass({
-    propTypes: {
-        columns: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-        values: React.PropTypes.arrayOf(React.PropTypes.node).isRequired
-    },
-
-    render: function () {
-        return (<div className="little-table">
-            <header className="flex-container">
-                { this.props.columns.map(function(c) {
-                    return (<div className="flex-1">{ c }</div>);
-                }) }
-            </header>
-            <div className="flex-container">
-                { this.props.values.map(function(v) {
-                    return (<div className="flex-1">{ v }</div>);
-                }) }
-            </div>
-        </div>)
-    }
-});
-
+var LittleTable = require('./components/little_table');
 var LabeledField = require('./components/labeled_field');
 
 var CharacterPanel = React.createClass({
@@ -139,29 +117,7 @@ var WillpowerPanel = React.createClass({
     }
 });
 
-var ExperiencePanel = React.createClass({
-    propTypes: {
-        experience: React.PropTypes.shape({
-            general: React.PropTypes.shape({
-                free: React.PropTypes.number,
-                total: React.PropTypes.number
-            }),
-            solar: React.PropTypes.shape({
-                free: React.PropTypes.number,
-                total: React.PropTypes.number
-            })
-        })
-    },
-
-    render: function () {
-        return (<BigPanel title="Experience" id="experience">
-            <LittleTable columns={ ['General', 'Solar'] }
-                         values={ [ [this.props.experience.general.free, this.props.experience.general.total].join(' / '),
-                                    [this.props.experience.solar.free, this.props.experience.solar.total].join(' / ') ] } />
-        </BigPanel>)
-}
-});
-
+var ExperiencePanel = require('./panels/experience');
 var LimitBreakPanel = require('./panels/limit_break');
 var HealthLevelsPanel = require('./panels/health_levels');
 var AttributesPanel = require('./panels/attributes');
