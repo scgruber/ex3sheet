@@ -328,42 +328,7 @@ var HealthLevelsPanel = React.createClass({
     }
 });
 
-var AttributesPanel = React.createClass({
-    propTypes: {
-        attributes: React.PropTypes.shape({
-            'Strength': React.PropTypes.number.isRequired,
-            'Dexterity': React.PropTypes.number.isRequired,
-            'Stamina': React.PropTypes.number.isRequired,
-            'Charisma': React.PropTypes.number.isRequired,
-            'Manipulation': React.PropTypes.number.isRequired,
-            'Appearance': React.PropTypes.number.isRequired,
-            'Perception': React.PropTypes.number.isRequired,
-            'Intelligence': React.PropTypes.number.isRequired,
-            'Wits': React.PropTypes.number.isRequired,
-        }).isRequired
-    },
-
-    render: function() {
-        var self = this;
-        var columns = [
-            ['Strength', 'Dexterity', 'Stamina'],
-            ['Charisma', 'Manipulation', 'Appearance'],
-            ['Perception', 'Intelligence', 'Wits']
-        ];
-        return (<BigPanel title="Attributes" id="attributes">
-            <div className="flex-container">
-                { columns.map(function(col) {
-                    return (<div key={ col.join() } className="flex-1">
-                        { col.map(function(attr) {
-                            return (<DottedStat key={ attr } stat={ attr } rating={ self.props.attributes[attr] }/>);
-                        }) }
-                    </div>);
-                }) }
-            </div>
-        </BigPanel>)
-    }
-});
-
+var AttributesPanel = require('./panels/attributes');
 var AbilitiesPanel = require('./panels/abilities');
 var SpecialtiesPanel = require('./panels/specialties');
 var MeritsPanel = require('./panels/merits');
