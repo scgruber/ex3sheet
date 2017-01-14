@@ -2,28 +2,28 @@ var React = require('react');
 
 var Marks = React.createClass({
     propTypes: {
-        openMark: React.PropTypes.node.isRequired,
-        fillMark: React.PropTypes.node.isRequired,
-        disableMark: React.PropTypes.node,
+        mark: React.PropTypes.element.isRequired,
         fill: React.PropTypes.number.isRequired,
         max: React.PropTypes.number.isRequired,
         enabled: React.PropTypes.number,
     },
 
     render: function(){
-        var output = [];
+        var marks = [];
         var enabled = this.props.enabled || this.props.max;
         for (var i=0; i<enabled; i++) {
             if (i < this.props.fill) {
-                output.push(this.props.fillMark);
+                marks.push('filled');
             } else {
-                output.push(this.props.openMark);
+                marks.push('open');
             }
         }
-        while (output.length < this.props.max) {
-            output.push(this.props.disableMark);
+        while (marks.length < this.props.max) {
+            marks.push('light');
         }
-        return (<span className="marks">{ output }</span>);
+        return (<span className="marks">
+          { marks.map((t,i) => <this.props.mark key={ i } mode={ t }/>) }
+        </span>);
     }
 });
 
