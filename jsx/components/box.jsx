@@ -2,7 +2,7 @@ var React = require('react');
 
 var Box = React.createClass({
     propTypes: {
-        mode: React.PropTypes.oneOf(['open', 'fill', 'slash', 'cross', 'star', 'light'])
+        mode: React.PropTypes.oneOf(['open', 'filled', 'slash', 'cross', 'star', 'light'])
     },
 
     render: function () {

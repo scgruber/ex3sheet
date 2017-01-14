@@ -5,7 +5,7 @@ var Dot = require('./dot')
 
 var Dots = React.createClass({
     render: function () {
-        return (<Marks openMark={ <Dot filled={ false }/> } fillMark={ <Dot filled={ true }/> } fill={ this.props.fill } max={ this.props.max }/>);
+        return (<Marks openMark={ <Dot mode="open"/> } fillMark={ <Dot mode="filled"/> } fill={ this.props.fill } max={ this.props.max }/>);
     }
 });
 

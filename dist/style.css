@@ -47,7 +47,7 @@ h6 { font-size: 1.000rem; }
 .box { stroke: #000000; stroke-width: 0.05; }
 .box-stroke { stroke: #333333; stroke-width: 0.05; }
 .box.light { stroke: #BBBBBB; fill: #FFFFFF; }
-.box.fill { fill: #333333; }
+.box.filled { fill: #333333; }
 .box.open, .box.slash, .box.cross, .box.star { fill: #FFFFFF; }
 
 /* LabeledField */
