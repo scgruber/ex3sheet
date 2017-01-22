@@ -12,44 +12,62 @@ var AbilitiesPanel = React.createClass({
         }))
     },
 
+    ABILITIES: [
+      ['Archery', 'Athletics', 'Awareness', 'Brawl', 'Bureaucracy', 'Dodge', 'Integrity', 'Investigation'],
+      ['Larceny', 'Linguistics', 'Lore', 'Medicine', 'Melee', 'Occult', 'Performance', 'Presence'],
+      ['Resistance', 'Ride', 'Sail', 'Socialize', 'Stealth', 'Survival', 'Thrown', 'War'],
+      ['Craft', 'Martial Arts'],
+    ],
+
+    renderNormalAbilityColumn: function(abilitySet) {
+      var self = this;
+      return (<div key={ abilitySet.join('-') } className="flex-1">
+        { abilitySet.map(function(ability) {
+          var favoredClass = self.props.abilities[ability].favored ? "ability-favored" : null;
+          var rating = self.props.abilities[ability].rating
+          return <DottedStat  key={ ability }
+                              stat={ ability }
+                              statClassName={ favoredClass }
+                              rating={ rating }/>;
+        }) }
+      </div>);
+    },
+
+    renderExtendedAbilityColumn: function(abilities) {
+      var self = this;
+      var extendedAbilities = [];
+      abilities.forEach(function(ability) {
+        Object.keys(self.props.abilities[ability].subs).forEach(function(subAbility) {
+          extendedAbilities.push({
+            name: ability + ": " + subAbility,
+            rating: self.props.abilities[ability].subs[subAbility],
+            favored: self.props.abilities[ability].favored,
+          });
+        });
+      });
+      while (extendedAbilities.length < this.ABILITIES[0].length) extendedAbilities.push(null);
+      return (<div className="flex-1">
+        { extendedAbilities.map(function(a, idx) {
+          if (a) {
+            var favoredClass = a.favored ? "ability-favored" : null;
+            return <DottedStat  key={ a.name }
+                                stat={ a.name }
+                                statClassName={ favoredClass }
+                                rating={ a.rating } />;
+          } else {
+            return <DottedStat  key={ "null"+idx }
+                                stat={ null }
+                                rating={ 0 } />;
+          }
+        }) }
+      </div>);
+    },
+
     render: function() {
-        var self = this;
-        var normalAbilities = Object.keys(this.props.abilities).filter(function(a) { return !Object.keys(self.props.abilities[a]).includes('subs'); });
-        var normalAbilitySets = normalAbilities.reduce(function(acc, e) { if (acc[acc.length-1].length >= normalAbilities.length / 3) {
-                acc.push([e]); return acc;
-            } else {
-                acc[acc.length-1].push(e); return acc;
-            } }, [[]])
-        var extraAbilityTypes = Object.keys(this.props.abilities).filter(function(a) { return Object.keys(self.props.abilities[a]).includes('subs'); });
-        var extraAbilityProps = extraAbilityTypes.map(function(t) {
-            var abilityType = self.props.abilities[t];
-            return Object.keys(abilityType.subs).map(function(s) {
-                var props = {};
-                props[t + ": " + s] = { favored: abilityType.favored, rating: abilityType.subs[s].rating };
-                return props;
-            }).reduce(function(acc, e) { return Object.assign(acc, e); }, {});
-        }).reduce(function(acc, e) { return Object.assign(acc, e); }, {});
-        var extraAbilities = Object.keys(extraAbilityProps).sort();
-        while (extraAbilities.length < normalAbilitySets[0].length) extraAbilities.push(null);
         return (<BigPanel title="Abilities" id="abilities">
             <div className="flex-container">
-                { normalAbilitySets.map(function(abilitySet, idx) {
-                    return (<div key={ "abilities-"+(idx+1) } className="flex-1">
-                        { abilitySet.map(function(ability) {
-                            var abilityClass = self.props.abilities[ability].favored ? "ability-favored" : null;
-                            return <DottedStat key={ ability } stat={ ability } statClassName={ abilityClass } rating={ self.props.abilities[ability].rating }/>;
-                        }) }
-                    </div>);
-                }) }
-                <div className="extra-abilities flex-1">
-                    { extraAbilities.map(function(a, idx) {
-                        if (a) {
-                            return <DottedStat key={ a } stat={ a } rating={ extraAbilityProps[a].rating } />;
-                        } else {
-                            return <DottedStat key={ "null"+idx } stat={ null } rating={ 0 } />;
-                        }
-                    }) }
-                </div>
+                { this.ABILITIES.slice(0,3).map((abilitySet) => this.renderNormalAbilityColumn(abilitySet)) }
+                { this.renderExtendedAbilityColumn(this.ABILITIES[3]) }
             </div>
         </BigPanel>);
     }
