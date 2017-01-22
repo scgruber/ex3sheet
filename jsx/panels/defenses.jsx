@@ -38,9 +38,10 @@ var DefensesPanel = React.createClass({
     },
 
     parry: function(ability) {
+      var self = this;
         var dex = this.props.attributes['Dexterity'];
         if (this.props.abilities[ability].subs) {
-            var ab = Object.keys(this.props.abilities[ability].subs).map(function(a) { return this.props.abilities[ability].subs[a]; }).reduce(Math.max, 0);
+            var ab = Object.keys(this.props.abilities[ability].subs).map(function(a) { return self.props.abilities[ability].subs[a]; }).reduce(Math.max, 0);
         } else {
             var ab = this.props.abilities[ability].rating;
         }
